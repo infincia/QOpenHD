@@ -45,7 +45,7 @@ static QString tx_power_unit_for_card(const int card_type){
     if(card_type==0){
         // OpenHD RTL8812AU
         return "TPI";
-    }else if(card_type==1){
+    }else if(card_type==1)||(card_type==3){
         return "mW";
     }
     return " ?mW";

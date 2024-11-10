@@ -39,7 +39,7 @@ PopupBigGeneric{
             _qopenhd.show_toast("WARNING: Changing TX power while armed is not recommended !");
         }
         var card_chipset_type=get_chipset_type();
-        if(!(card_chipset_type==0 || card_chipset_type==1)){
+        if(!(card_chipset_type==0 || card_chipset_type==1 || card_chipset_type==3)){
             _messageBoxInstance.set_text_and_show("Changing tx power is only possible on openhd supported cards.");
             return;
         }

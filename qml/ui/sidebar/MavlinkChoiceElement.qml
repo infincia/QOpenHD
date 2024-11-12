@@ -26,7 +26,13 @@ BaseJoyEditElement{
     property var m_settings_model: _ohdSystemGroundSettings
     // Int param is much more common, but string param is also possible
     property bool override_takes_string_param: false
-
+    ListModel{
+        id: elements_frequency_scan
+        ListElement {value: 0; verbose:"OHD"}
+        ListElement {value: 1; verbose:"5.8"}
+        ListElement {value: 2; verbose:"2.4"}
+        ListElement {value: 3; verbose:"ALL"}
+    }
     ListModel{
         id: elements_model_brightness
         ListElement {value: 0; verbose:"0%"}
@@ -150,6 +156,8 @@ BaseJoyEditElement{
     property string m_actual_value_string: ""
 
     function get_model(){
+        }else if(param_id=="FREQUENCY_SCAN"){
+            return elements_frequency_scan;
         if(m_param_id=="BRIGHTNESS"){
             return elements_model_brightness;
         }else if(m_param_id=="SATURATION"){

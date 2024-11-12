@@ -35,6 +35,7 @@ BaseJoyEditElement2{
     // EXTRA
     property string mPARAM_ID_CHANNEL_WIDTH: "CHANNEL_WIDTH"
     property string mPARAM_ID_FREQUENCY: "FREQUENCY"
+    property string mPARAM_ID_FREQUENCY_SCAN: "FREQUENCY_SCAN"
     property string mPARAM_ID_RATE: "RATE"
 
 
@@ -119,8 +120,7 @@ BaseJoyEditElement2{
     property string populate_display_text:"I SHOULD NEVER APPEAR"
 
     function populate(){
-        // Don't mind those 3
-        if(m_param_id==mPARAM_ID_CHANNEL_WIDTH || m_param_id==mPARAM_ID_FREQUENCY || m_param_id==mPARAM_ID_RATE){
+        if(m_param_id==mPARAM_ID_CHANNEL_WIDTH || m_param_id==mPARAM_ID_FREQUENCY || mPARAM_ID_FREQUENCY_SCAN || m_param_id==mPARAM_ID_RATE){
             return;
         }
         // First, check if the system is alive
@@ -189,7 +189,7 @@ BaseJoyEditElement2{
 
     function user_selected_value(value_new){
         // A few need to be handled specially
-         if(m_param_id==mPARAM_ID_FREQUENCY){
+         if(m_param_id==mPARAM_ID_FREQUENCY || m_param_id==mPARAM_ID_FREQUENCY_SCAN){
             if(_fcMavlinkSystem.armed){
                 if(settings.dev_allow_freq_change_when_armed){
                     // okay
@@ -203,6 +203,11 @@ BaseJoyEditElement2{
             const new_frequency=value_new;
             _qopenhd.set_busy_for_milliseconds(2000,"CHANGING FREQUENCY");
             _wbLinkSettingsHelper.change_param_air_and_ground_frequency(value_new)
+            return;
+        }else if(m_param_id==mPARAM_ID_FREQUENCY_SCAN){
+            const frequency_scan=value_new;
+            _qopenhd.set_busy_for_milliseconds(2000,"Starting scan");
+            //PLATZHALTER
             return;
         }else if(m_param_id==mPARAM_ID_CHANNEL_WIDTH){
             const channel_width_mhz=value_new;
@@ -242,8 +247,13 @@ BaseJoyEditElement2{
     onCurr_bandwidth_mhzChanged: {
         extra_populate();
     }
+    property bool curr_frequency_scan: (_ohdSystemGround.wb_gnd_operating_mode == 0)
+    onCurr_frequency_scanChanged: {
+        extra_populate();
+    }
+
     function extra_populate(){
-        if(!(m_param_id==mPARAM_ID_CHANNEL_WIDTH || m_param_id==mPARAM_ID_FREQUENCY || m_param_id==mPARAM_ID_RATE)){
+        if(!(m_param_id==mPARAM_ID_CHANNEL_WIDTH || m_param_id==mPARAM_ID_FREQUENCY || mPARAM_ID_FREQUENCY_SCAN || m_param_id==mPARAM_ID_RATE )){
             return;
         }
         // First, check if the system is alive
@@ -252,6 +262,10 @@ BaseJoyEditElement2{
             m_param_exists=false;
             populate_display_text="N/A";
             return;
+        }
+        if(m_param_id==mPARAM_ID_FREQUENCY_SCAN){
+               populate_display_text="Debug";
+               return;
         }
         if(m_param_id==mPARAM_ID_FREQUENCY){
             if(curr_channel_mhz<=0){
@@ -279,5 +293,4 @@ BaseJoyEditElement2{
             m_param_exists=true;
         }
     }
-
 }

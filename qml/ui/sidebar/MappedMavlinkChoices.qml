@@ -165,6 +165,13 @@ Item {
         ListElement {value: 40; verbose:"40Mhz\n(HIGH BW)"}
     }
     ListModel{
+        id: elements_frequency_scan
+        ListElement {value: 0; verbose:"OHD"}
+        ListElement {value: 1; verbose:"5.8"}
+        ListElement {value: 2; verbose:"2.4"}
+        ListElement {value: 3; verbose:"ALL"}
+    }
+    ListModel{
         id: elements_model_rate
         ListElement {value: 0; verbose:"MCS0\n(LONG RANGE)"}
         ListElement {value: 1; verbose:"MCS1\n(RANGE)"}
@@ -198,6 +205,8 @@ Item {
                 return frequencies_model_with_5180mhz_lowband
             }
             return frequencies_model;
+        }else if(param_id=="FREQUENCY_SCAN"){
+            return elements_frequency_scan;
         }else if(param_id=="CHANNEL_WIDTH"){
             return elements_model_channel_width;
         }else if(param_id=="RATE"){

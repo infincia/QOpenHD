@@ -39,7 +39,7 @@ PopupBigGeneric{
             _qopenhd.show_toast("WARNING: Changing TX power while armed is not recommended !");
         }
         var card_chipset_type=get_chipset_type();
-        if(!(card_chipset_type==0 || card_chipset_type==1)){
+        if(!(card_chipset_type==0 || card_chipset_type==1 || card_chipset_type==3)){
             _messageBoxInstance.set_text_and_show("Changing tx power is only possible on openhd supported cards.");
             return;
         }
@@ -107,6 +107,13 @@ PopupBigGeneric{
         ListElement {title: "COMFAST [RTL88XXBU]"; value: 0}
         ListElement {title: "OTHER [RTL88XXBU]"; value: 1}
     }
+        ListModel{
+        id: model_rtl8812eu_manufacturers
+        ListElement {title: "Please Select"; value: -1}
+        ListElement {title: "LB-Link [RTL88XXEU]"; value: 0}
+        ListElement {title: "OpenHD [RTL88XXEU]"; value: 1}
+        ListElement {title: "OTHER [RTL88XXEU]"; value: 2}
+    }
 
     function get_model_manufacturer_for_chip_type(){
         var chip_type=get_chipset_type();
@@ -114,6 +121,8 @@ PopupBigGeneric{
             return model_rtl8812au_manufacturers;
         }else if(chip_type==1){
             return model_rtl8812bu_manufacturers;
+        }else if(chip_type==3){
+            return model_rtl8812eu_manufacturers;
         }
         return model_manufacturer_unknown_chipset;
     }
@@ -176,6 +185,28 @@ PopupBigGeneric{
         ListElement {title: "<=1000mW (maybe)"; value: 1000}
         ListElement {title: "<=20000mW (maybe)"; value: 2000}
     }
+    //RTL8812EU begin
+    ListModel{
+        id: model_rtl8812eu_manufacturer_lb_link
+        ListElement {title: "Please select"; value: -1}
+        ListElement {title: "~300mW"; value: 25}
+        ListElement {title: "~800mW"; value: 100}
+        ListElement {title: "~1000mW"; value: 200}
+    }
+    ListModel{
+        id: model_rtl8812eu_manufacturer_openhd
+        ListElement {title: "Please select"; value: -1}
+        ListElement {title: "~300mW"; value: 25}
+        ListElement {title: "~800mW"; value: 100}
+        ListElement {title: "~1000mW"; value: 200}
+    }
+        ListModel{
+        id: model_rtl8812eu_manufacturer_generic
+        ListElement {title: "Please select"; value: -1}
+        ListElement {title: "~300mW"; value: 25}
+        ListElement {title: "~800mW"; value: 100}
+        ListElement {title: "~1000mW"; value: 200}
+    }
 
     // Such that we can copy and add the extra value for "NOT ENABLED"
     ListModel{
@@ -208,6 +239,15 @@ PopupBigGeneric{
                 ret= model_rtl8812bu_manufacturer_comfast;
             }else{
                 ret = model_rtl8812bu_manufacturer_generic;
+            }
+        }else if(chip_type==3){
+            // RTL8812EU
+            if(manufacturer==0){
+                ret= model_rtl8812eu_manufacturer_openhd;
+            }else if(manufacturer==1){
+                ret = model_rtl8812eu_manufacturer_lb_link;
+            }else {
+                ret = model_rtl8812eu_manufacturer_generic;
             }
         }else{
             ret = model_error;

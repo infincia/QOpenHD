@@ -113,6 +113,12 @@ PopupBigGeneric{
         ListElement {title: "LB-Link [RTL88XXEU]"; value: 0}
         ListElement {title: "OpenHD [RTL88XXEU]"; value: 1}
         ListElement {title: "OTHER [RTL88XXEU]"; value: 2}
+    }        
+        ListModel{
+        id: model_qualcomm_manufacturers
+        ListElement {title: "Please Select"; value: -1}
+        ListElement {title: "Coretronic"; value: 0}
+        ListElement {title: "OTHER"; value: 1}
     }
 
     function get_model_manufacturer_for_chip_type(){
@@ -123,6 +129,8 @@ PopupBigGeneric{
             return model_rtl8812bu_manufacturers;
         }else if(chip_type==3){
             return model_rtl8812eu_manufacturers;
+        }else if(chip_type==4){
+            return model_qualcomm_manufacturers;
         }
         return model_manufacturer_unknown_chipset;
     }
@@ -185,27 +193,51 @@ PopupBigGeneric{
         ListElement {title: "<=1000mW (maybe)"; value: 1000}
         ListElement {title: "<=20000mW (maybe)"; value: 2000}
     }
-    //RTL8812EU begin
+   //RTL8812EU begin
     ListModel{
         id: model_rtl8812eu_manufacturer_lb_link
         ListElement {title: "Please select"; value: -1}
-        ListElement {title: "~300mW"; value: 25}
-        ListElement {title: "~800mW"; value: 100}
-        ListElement {title: "~1000mW"; value: 200}
+        ListElement {title: "~25mW"; value: 25}
+        ListElement {title: "~100mW"; value: 100}
+        ListElement {title: "~300mW"; value: 300}
+        ListElement {title: "~500mW"; value: 500}
+        ListElement {title: "~800mW"; value: 800}
+        ListElement {title: "~1000mW"; value: 1000}
     }
     ListModel{
         id: model_rtl8812eu_manufacturer_openhd
         ListElement {title: "Please select"; value: -1}
-        ListElement {title: "~300mW"; value: 25}
-        ListElement {title: "~800mW"; value: 100}
-        ListElement {title: "~1000mW"; value: 200}
+        ListElement {title: "~25mW"; value: 25}
+        ListElement {title: "~100mW"; value: 100}
+        ListElement {title: "~300mW"; value: 300}
+        ListElement {title: "~500mW"; value: 500}
+        ListElement {title: "~800mW"; value: 800}
+        ListElement {title: "~1000mW"; value: 1000}
     }
         ListModel{
         id: model_rtl8812eu_manufacturer_generic
         ListElement {title: "Please select"; value: -1}
-        ListElement {title: "~300mW"; value: 25}
-        ListElement {title: "~800mW"; value: 100}
-        ListElement {title: "~1000mW"; value: 200}
+        ListElement {title: "~25mW"; value: 25}
+        ListElement {title: "~100mW"; value: 100}
+        ListElement {title: "~300mW"; value: 300}
+        ListElement {title: "~500mW"; value: 500}
+        ListElement {title: "~800mW"; value: 800}
+        ListElement {title: "~1000mW"; value: 1000}
+    }
+    //QUALCOMM begin
+    ListModel{
+        id: model_qualcomm_manufacturer_coretronic
+        ListElement {title: "Please select"; value: -1}
+        ListElement {title: "~30mw"; value: 30}
+        ListElement {title: "~100mW"; value: 100}
+        ListElement {title: "~200mW"; value: 200}
+    }
+    ListModel{
+        id: model_qualcomm_manufacturer_generic
+        ListElement {title: "Please select"; value: -1}
+        ListElement {title: "~30mw"; value: 30}
+        ListElement {title: "~100mW"; value: 100}
+        ListElement {title: "~200mW"; value: 200}
     }
 
     // Such that we can copy and add the extra value for "NOT ENABLED"
@@ -248,6 +280,13 @@ PopupBigGeneric{
                 ret = model_rtl8812eu_manufacturer_lb_link;
             }else {
                 ret = model_rtl8812eu_manufacturer_generic;
+            }
+        }else if(chip_type==4){
+            // QUALCOMM
+            if(manufacturer==0){
+                ret= model_qualcomm_manufacturer_coretronic;
+            }else {
+                ret = model_qualcomm_manufacturer_generic;
             }
         }else{
             ret = model_error;
@@ -493,4 +532,3 @@ PopupBigGeneric{
         // ----------------
     }
 }
-

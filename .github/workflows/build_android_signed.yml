@@ -3,7 +3,7 @@ name: build_android_signed
 on:
   push:
    branches:
-      - "2.5-evo"
+      - "2.6-evo"
       - "dev-release"
       - "release"
    paths-ignore:

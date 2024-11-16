@@ -193,7 +193,7 @@ PopupBigGeneric{
         ListElement {title: "<=1000mW (maybe)"; value: 1000}
         ListElement {title: "<=20000mW (maybe)"; value: 2000}
     }
-    //RTL8812EU begin
+   //RTL8812EU begin
     ListModel{
         id: model_rtl8812eu_manufacturer_lb_link
         ListElement {title: "Please select"; value: -1}
@@ -207,16 +207,22 @@ PopupBigGeneric{
     ListModel{
         id: model_rtl8812eu_manufacturer_openhd
         ListElement {title: "Please select"; value: -1}
-        ListElement {title: "~300mW"; value: 25}
-        ListElement {title: "~800mW"; value: 100}
-        ListElement {title: "~1000mW"; value: 200}
+        ListElement {title: "~25mW"; value: 25}
+        ListElement {title: "~100mW"; value: 100}
+        ListElement {title: "~300mW"; value: 300}
+        ListElement {title: "~500mW"; value: 500}
+        ListElement {title: "~800mW"; value: 800}
+        ListElement {title: "~1000mW"; value: 1000}
     }
         ListModel{
         id: model_rtl8812eu_manufacturer_generic
         ListElement {title: "Please select"; value: -1}
-        ListElement {title: "~300mW"; value: 25}
-        ListElement {title: "~800mW"; value: 100}
-        ListElement {title: "~1000mW"; value: 200}
+        ListElement {title: "~25mW"; value: 25}
+        ListElement {title: "~100mW"; value: 100}
+        ListElement {title: "~300mW"; value: 300}
+        ListElement {title: "~500mW"; value: 500}
+        ListElement {title: "~800mW"; value: 800}
+        ListElement {title: "~1000mW"; value: 1000}
     }
     //QUALCOMM begin
     ListModel{

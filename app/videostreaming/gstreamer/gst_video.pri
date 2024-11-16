@@ -18,10 +18,10 @@ android{
     message("gst android")
     # More or less taken from QGroundControl.
     # this is already the "least dirty" solution I could come up with :/
-
+    #DOWNLOADED_GST_FOLDER= /home/hyperion/gstreamer-1.0-android-universal-1.20.5
     #DOWNLOADED_GST_FOLDER= /home/consti10/Downloads/gstreamer-1.0-android-universal-1.20.5
     #DOWNLOADED_GST_FOLDER= $$PWD/../../../lib/gstreamer_prebuilts/gstreamer-1.0-android-universal-1.20.5
-     DOWNLOADED_GST_FOLDER= $$PWD/../../../lib/gstreamer_prebuilts/gstreamer-1.0-android-universal
+    DOWNLOADED_GST_FOLDER= $$PWD/../../../lib/gstreamer_prebuilts/gstreamer-1.0-android-universal
 
     # Set the right folder for the compile arch
     GSTREAMER_ARCH_FOLDER = armv7

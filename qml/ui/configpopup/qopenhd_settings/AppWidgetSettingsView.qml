@@ -45,8 +45,11 @@ ScrollView {
         settings.show_flight_mah= enable_elements;
         settings.show_flight_mah_km=enable_elements;
         settings.show_press_temp=enable_elements;
+        settings.show_press_temp2=enable_elements
+        settings.show_imu_temp=enable_elements;
         settings.show_airspeed_temp=enable_elements;
         settings.show_esc_temp=enable_elements;
+        settings.show_battery_temp=enable_elements;
         settings.show_ground_status= enable_elements;
         settings.show_air_status=enable_elements;
         settings.show_message_hud= enable_elements;
@@ -442,6 +445,34 @@ ScrollView {
                     color: (Positioner.index % 2 == 0) ? "#8cbfd7f3" : "#00000000"
 
                     Text {
+                        text: qsTr("Show Pressure Sensor 2 Temperature")
+                        font.weight: Font.Bold
+                        font.pixelSize: 13
+                        anchors.leftMargin: 8
+                        verticalAlignment: Text.AlignVCenter
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: 224
+                        height: elementHeight
+                        anchors.left: parent.left
+                    }
+
+                    Switch {
+                        width: 32
+                        height: elementHeight
+                        anchors.rightMargin: Qt.inputMethod.visible ? 96 : 36
+                        anchors.right: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                        checked: settings.show_press_temp2
+                        onCheckedChanged: settings.show_press_temp2 = checked
+                    }
+                }
+
+                Rectangle {
+                    width: parent.width
+                    height: rowHeight
+                    color: (Positioner.index % 2 == 0) ? "#8cbfd7f3" : "#00000000"
+
+                    Text {
                         text: qsTr("Show Airspeed Sensor Temperature")
                         font.weight: Font.Bold
                         font.pixelSize: 13
@@ -491,6 +522,34 @@ ScrollView {
                         anchors.verticalCenter: parent.verticalCenter
                         checked: settings.show_esc_temp
                         onCheckedChanged: settings.show_esc_temp = checked
+                    }
+                }
+
+                Rectangle {
+                    width: parent.width
+                    height: rowHeight
+                    color: (Positioner.index % 2 == 0) ? "#8cbfd7f3" : "#00000000"
+
+                    Text {
+                        text: qsTr("Show Battery Temperature")
+                        font.weight: Font.Bold
+                        font.pixelSize: 13
+                        anchors.leftMargin: 8
+                        verticalAlignment: Text.AlignVCenter
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: 224
+                        height: elementHeight
+                        anchors.left: parent.left
+                    }
+
+                    Switch {
+                        width: 32
+                        height: elementHeight
+                        anchors.rightMargin: Qt.inputMethod.visible ? 96 : 36
+                        anchors.right: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                        checked: settings.show_battery_temp
+                        onCheckedChanged: settings.show_battery_temp = checked
                     }
                 }
 

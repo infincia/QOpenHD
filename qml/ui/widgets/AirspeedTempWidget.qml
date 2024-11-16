@@ -18,8 +18,8 @@ BaseWidget {
 
 
     defaultAlignment: 1
-    defaultXOffset: 12
-    defaultYOffset: 32
+    defaultXOffset: 90
+    defaultYOffset: 55
     defaultHCenter: false
     defaultVCenter: false
 
@@ -171,6 +171,7 @@ BaseWidget {
             id: temp_glyph
             color: _fcMavlinkSystem.airspeed_sensor_temperature_degree <= settings.airspeed_temp_caution ? (_fcMavlinkSystem.airspeed_sensor_temperature_degree <= settings.airspeed_temp_warn ? settings.color_warn : settings.color_caution) : settings.color_shape
             opacity: bw_current_opacity
+            //suggest change to wind icon f72e
             text: _fcMavlinkSystem.airspeed_sensor_temperature_degree <= settings.airspeed_temp_caution ? (_fcMavlinkSystem.airspeed_sensor_temperature_degree <= settings.airspeed_temp_warn ? "\uf2c7" : "\uf2c9") : "\uf2cb"
             anchors.left: parent.left
             anchors.bottom: parent.bottom

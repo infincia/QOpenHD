@@ -14,11 +14,11 @@ BaseWidget {
     visible: settings.show_esc_temp && settings.show_widgets
 
     widgetIdentifier: "esc_temp_widget"
-    bw_verbose_name: "EST TEMPERATURE"
+    bw_verbose_name: "ESC TEMPERATURE"
 
     defaultAlignment: 1
-    defaultXOffset: 12
-    defaultYOffset: 56
+    defaultXOffset: 90
+    defaultYOffset: 32
     defaultHCenter: false
     defaultVCenter: false
 

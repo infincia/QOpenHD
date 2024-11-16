@@ -193,25 +193,38 @@ Settings {
 
     property bool show_flight_mah_km: true
 
-    property bool show_imu_temp: false
+    property bool show_imu_temp: true
     property bool imu_temp_declutter: false
     property double imu_temp_warn: 75
     property double imu_temp_caution: 65
 
-    property bool show_press_temp: true
+    property bool show_press_temp: false
     property bool press_temp_declutter: false
     property double press_temp_warn: 75
     property double press_temp_caution: 60
+
+    property bool show_press_temp2: true
+    property bool press_temp_declutter2: false
+    //AC180 or another 8812 wifi module temperature ranges (datasheet 125 max)
+    property double press_temp_warn2: 75
+    property double press_temp_caution2: 60
+
 
     property bool show_airspeed_temp: false
     property bool airspeed_temp_declutter: false
     property double airspeed_temp_warn: 0
     property double airspeed_temp_caution: 10
 
-    property bool show_esc_temp: false
+    property bool show_esc_temp: true
     property bool esc_temp_declutter: false
     property double esc_temp_warn: 75
     property double esc_temp_caution: 60
+
+    property bool show_battery_temp: true
+    property bool battery_temp_declutter: false
+    //samsung 35e has -10 to 60 temp range
+    property double battery_temp_warn: 60
+    property double battery_temp_caution: 40
 
     property bool show_ground_status: true
     property bool ground_status_declutter: false

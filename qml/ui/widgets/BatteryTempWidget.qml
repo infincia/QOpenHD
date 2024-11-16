@@ -7,17 +7,18 @@ import Qt.labs.settings 1.0
 import OpenHD 1.0
 
 BaseWidget {
-    id: imuTempWidget
+    id: batteryTempWidget
     width: 30
     height: 30
 
-    visible: settings.show_imu_temp && settings.show_widgets
+    visible: settings.show_battery_temp && settings.show_widgets
 
-    widgetIdentifier: "imu_temp_widget"
-    bw_verbose_name: "IMU TEMPERATURE"
+    widgetIdentifier: "battery_temp_widget"
+    bw_verbose_name: "BATTERY SENSOR TEMP"
+
 
     defaultAlignment: 1
-    defaultXOffset: 27
+    defaultXOffset: 140
     defaultYOffset: 32
     defaultHCenter: false
     defaultVCenter: false
@@ -32,6 +33,30 @@ BaseWidget {
 
         BaseWidgetDefaultUiControlElements{
             id: idBaseWidgetDefaultUiControlElements
+            Item {
+                width: parent.width
+                height: 42
+                Text {
+                    id: batterytempSettingsTitle
+                    text: qsTr("BATTERY SENSOR TEMPERATURE")
+                    color: "white"
+                    height: parent.height - 10
+                    width: parent.width
+                    font.bold: true
+                    horizontalAlignment: Text.AlignHCenter
+                    font.pixelSize: detailPanelFontPixels
+                    verticalAlignment: Text.AlignVCenter
+                }
+                Rectangle {
+                    id: batterytempSettingsTitleUL
+                    y: 34
+                    width: parent.width
+                    height: 3
+                    color: "white"
+                    radius: 5
+                }
+            }
+
             Item {
                 width: parent.width
                 height: 32
@@ -49,12 +74,12 @@ BaseWidget {
                     height: parent.height
                     anchors.rightMargin: 6
                     anchors.right: parent.right
-                    checked: settings.imu_temp_declutter
-                    onCheckedChanged: settings.imu_temp_declutter = checked
+                    checked: settings.battery_temp_declutter
+                    onCheckedChanged: settings.battery_temp_declutter = checked
                 }
             }
             Item {
-                id: imu_temp_warn_label
+                id: battery_temp_warn_label
                 width: parent.width
                 height: 32
                 Text {
@@ -67,7 +92,7 @@ BaseWidget {
                     verticalAlignment: Text.AlignVCenter
                 }
                 Text {
-                    text: settings.imu_temp_warn
+                    text: settings.battery_temp_warn
                     color: settings.color_warn
                     height: parent.height
                     font.bold: true
@@ -76,11 +101,11 @@ BaseWidget {
                     verticalAlignment: Text.AlignVCenter
                 }
                 Slider {
-                    id: imu_temp_warn_Slider
+                    id: battery_temp_warn_Slider
                     orientation: Qt.Horizontal
-                    from: 75
-                    value: settings.imu_temp_warn
-                    to: 150
+                    from: 0
+                    value: settings.battery_temp_warn
+                    to: 9
                     stepSize: 1
                     height: parent.height
                     anchors.rightMargin: 0
@@ -88,13 +113,13 @@ BaseWidget {
                     width: parent.width - 96
 
                     onValueChanged: {
-                        settings.imu_temp_warn = Math.round(
-                                    imu_temp_warn_Slider.value * 10) / 10.0
+                        settings.battery_temp_warn = Math.round(
+                                    battery_temp_warn_Slider.value * 10) / 10.0
                     }
                 }
             }
             Item {
-                id: imu_temp_caution_label
+                id: battery_temp_caution_label
                 width: parent.width
                 height: 32
                 Text {
@@ -107,20 +132,20 @@ BaseWidget {
                     verticalAlignment: Text.AlignVCenter
                 }
                 Text {
-                    text: settings.imu_temp_caution
+                    text: settings.battery_temp_caution
                     color: settings.color_caution
                     height: parent.height
                     font.bold: true
                     font.pixelSize: detailPanelFontPixels
-                    anchors.left: imu_temp_caution_label.right
+                    anchors.left: battery_temp_caution_label.right
                     verticalAlignment: Text.AlignVCenter
                 }
                 Slider {
-                    id: imu_temp_caution_Slider
+                    id: battery_temp_caution_Slider
                     orientation: Qt.Horizontal
-                    from: 30
-                    value: settings.imu_temp_caution
-                    to: 74
+                    from: 10
+                    value: settings.battery_temp_caution
+                    to: 20
                     stepSize: 1
                     height: parent.height
                     anchors.rightMargin: 0
@@ -128,8 +153,8 @@ BaseWidget {
                     width: parent.width - 96
 
                     onValueChanged: {
-                        settings.imu_temp_caution = Math.round(
-                                    imu_temp_caution_Slider.value * 10) / 10.0
+                        settings.battery_temp_caution = Math.round(
+                                    battery_temp_caution_Slider.value * 10) / 10.0
                     }
                 }
             }
@@ -141,12 +166,12 @@ BaseWidget {
 
         anchors.fill: parent
         scale: bw_current_scale
-        opacity: bw_current_opacity
 
         Text {
             id: temp_glyph
-            color: _fcMavlinkSystem.imu_temp_degree >= settings.imu_temp_caution ? (_fcMavlinkSystem.imu_temp_degree >= settings.imu_temp_warn ? settings.color_warn : settings.color_caution) : settings.color_shape
-            text: "\uf5d2"
+            color: _fcMavlinkSystem.battery_temperature <= settings.battery_temp_caution ? (_fcMavlinkSystem.battery_temperature <= settings.battery_temp_warn ? settings.color_warn : settings.color_caution) : settings.color_shape
+            opacity: bw_current_opacity
+            text: "\uf5df"
             anchors.left: parent.left
             anchors.bottom: parent.bottom
             font.family: "Font Awesome 5 Free"
@@ -160,15 +185,15 @@ BaseWidget {
         }
 
         Text {
-            id: imu_temp
+            id: battery_temp
             color: {
-                if (_fcMavlinkSystem.imu_temp_degree >= settings.imu_temp_warn) {
+                if (_fcMavlinkSystem.battery_temperature <= settings.battery_temp_warn) {
                     widgetInner.visible = true
                     return settings.color_warn
-                } else if (_fcMavlinkSystem.imu_temp_degree > settings.imu_temp_caution) {
+                } else if (_fcMavlinkSystem.battery_temperature < settings.battery_temp_caution) {
                     widgetInner.visible = true
                     return settings.color_caution
-                } else if (settings.imu_temp_declutter == true
+                } else if (settings.battery_temp_declutter == true
                            && _fcMavlinkSystem.armed == true) {
                     widgetInner.visible = false
                     return settings.color_text
@@ -177,7 +202,8 @@ BaseWidget {
                     return settings.color_text
                 }
             }
-            text: _fcMavlinkSystem.imu_temp_degree == 0 ? qsTr("N/A") : _fcMavlinkSystem.imu_temp_degree + "°"
+            opacity: bw_current_opacity
+            text: _fcMavlinkSystem.battery_temperature == 99 ? qsTr("N/A") : _fcMavlinkSystem.battery_temperature + "°"
             anchors.left: temp_glyph.right
             anchors.leftMargin: 2
             anchors.bottom: parent.bottom
@@ -192,3 +218,4 @@ BaseWidget {
         }
     }
 }
+

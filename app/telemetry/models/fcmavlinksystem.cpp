@@ -173,7 +173,14 @@ bool FCMavlinkSystem::process_message(const mavlink_message_t &msg)
         mavlink_scaled_pressure_t scaled_pressure;
         mavlink_msg_scaled_pressure_decode(&msg, &scaled_pressure);
         set_preasure_sensor_temperature_degree((int)scaled_pressure.temperature/100);
-        //qDebug() << "Temp:" <<  scaled_pressure.temperature;
+        //qDebug() << "Temp:" <<  scaled_pressure.temperature;;
+        break;
+    }
+    case MAVLINK_MSG_ID_SCALED_PRESSURE2:{
+        mavlink_scaled_pressure_t scaled_pressure2;
+        mavlink_msg_scaled_pressure_decode(&msg, &scaled_pressure2);
+        set_preasure_sensor2_temperature_degree((int)scaled_pressure2.temperature/100);
+        //qDebug() << "Temp:" <<  scaled_pressure2.temperature;
         break;
     }
     case MAVLINK_MSG_ID_ATTITUDE:{
@@ -334,6 +341,7 @@ bool FCMavlinkSystem::process_message(const mavlink_message_t &msg)
         mavlink_battery_status_t battery_status;
         mavlink_msg_battery_status_decode(&msg, &battery_status);
         set_battery_consumed_mah(battery_status.current_consumed);
+        set_battery_temperature((int)battery_status.temperature/100);
         QSettings settings;
         const bool air_battery_use_batt_id_0_only=settings.value("air_battery_use_batt_id_0_only", false).toBool();
         if(!air_battery_use_batt_id_0_only){
@@ -416,9 +424,6 @@ bool FCMavlinkSystem::process_message(const mavlink_message_t &msg)
         break;
     }
     case MAVLINK_MSG_ID_POSITION_TARGET_GLOBAL_INT:{
-        break;
-    }
-    case MAVLINK_MSG_ID_SCALED_PRESSURE2:{
         break;
     }
     case MAVLINK_MSG_ID_HIL_GPS:{

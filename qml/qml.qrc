@@ -1,33 +1,33 @@
 <RCC>
-    <qresource lang="en" prefix="/translations">
+    <qresource prefix="/translations" lang="en">
         <file alias="QOpenHD.qm">../translations/QOpenHD_en.qm</file>
         <file>resources/cursors/arrow_512_green.png</file>
         <file>resources/cursors/arrow_512_transparent.png</file>
         <file>resources/cursors/arrow_512_white.png</file>
         <file>resources/cursors/hand_white.png</file>
     </qresource>
-    <qresource lang="de" prefix="/translations">
+    <qresource prefix="/translations" lang="de">
         <file alias="QOpenHD.qm">../translations/QOpenHD_de.qm</file>
     </qresource>
-    <qresource lang="ru" prefix="/translations">
+    <qresource prefix="/translations" lang="ru">
         <file alias="QOpenHD.qm">../translations/QOpenHD_ru.qm</file>
     </qresource>
-    <qresource lang="es" prefix="/translations">
+    <qresource prefix="/translations" lang="es">
         <file alias="QOpenHD.qm">../translations/QOpenHD_es.qm</file>
     </qresource>
-    <qresource lang="fr" prefix="/translations">
+    <qresource prefix="/translations" lang="fr">
         <file alias="QOpenHD.qm">../translations/QOpenHD_fr.qm</file>
     </qresource>
-    <qresource lang="nl" prefix="/translations">
+    <qresource prefix="/translations" lang="nl">
         <file alias="QOpenHD.qm">../translations/QOpenHD_nl.qm</file>
     </qresource>
-    <qresource lang="ro" prefix="/translations">
+    <qresource prefix="/translations" lang="ro">
         <file alias="QOpenHD.qm">../translations/QOpenHD_ro.qm</file>
     </qresource>
-    <qresource lang="it" prefix="/translations">
+    <qresource prefix="/translations" lang="it">
         <file alias="QOpenHD.qm">../translations/QOpenHD_it.qm</file>
     </qresource>
-    <qresource lang="zh" prefix="/translations">
+    <qresource prefix="/translations" lang="zh">
         <file alias="QOpenHD.qm">../translations/QOpenHD_zh.qm</file>
     </qresource>
     <qresource prefix="/">
@@ -313,5 +313,7 @@
         <file>ui/sidebar/MappedMavlinkChoices.qml</file>
         <file>ui/widgets/X20OverheatWidget.qml</file>
         <file>ui/sidebar/ActionElement.qml</file>
+        <file>ui/widgets/BatteryTempWidget.qml</file>
+        <file>ui/widgets/PressTempWidget2.qml</file>
     </qresource>
 </RCC>

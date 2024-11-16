@@ -110,7 +110,7 @@ jobs:
           make -j$(($(nproc)/2)) qmake_all
           make -j12
           make install INSTALL_ROOT=android
-          androiddeployqt --output android --verbose --input android-QOpenHD-deployment-settings.json  --android-platform android-33 --gradle --aab --release --sign ${SOURCE_DIR}/android/qopenhd_key.jks key0 --storepass '${{ secrets.ANDROID_KEYSTORE_PASSWORD }}'
+          androiddeployqt --output android --verbose --input android-QOpenHD-deployment-settings.json  --android-platform android-34 --gradle --aab --release --sign ${SOURCE_DIR}/android/qopenhd_key.jks qopenhd_key --storepass '${{ secrets.ANDROID_KEYSTORE_PASSWORD }}'
 
           zip -r file.zip .
 

@@ -370,12 +370,21 @@ Item {
         PressTempWidget {
             id: press_temp
         }
+
+        PressTempWidget2 {
+            id: press_temp2
+        }
+
         RCRssiWidget {
             id: rc_rssi_widget
         }
 
         AirspeedTempWidget {
             id: airspeed_temp
+        }
+
+        BatteryTempWidget {
+            id: battery_temp
         }
 
         // + 0% cpu

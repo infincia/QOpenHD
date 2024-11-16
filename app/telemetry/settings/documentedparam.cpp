@@ -98,19 +98,23 @@ static std::vector<std::shared_ptr<XParam>> get_parameters_list(){
         //58: 420-450 mW
         // NOTE: We now have the tx power wizzard !
         auto values_WB_TX_PWR_INDEX=std::vector<ImprovedIntSetting::Item>{
+            {"Unitless [1]",1},
             {"Unitless [3]",3},
             {"Unitless [6]",6},
             {"Unitless [10]",10},
             {"Unitless [20]",20},
+            {"Unitless [26]",26},
             {"Unitless [40]",40},
             {"Unitless [60]",60},
             {"Unitless [63]",63},                                                                   };
         auto values_WB_TX_PWR_INDEX_ARMED=std::vector<ImprovedIntSetting::Item>{
             {"Disabled [0]",0},
+            {"Unitless [1]",1},
             {"Unitless [3]",3},
             {"Unitless [6]",6},
             {"Unitless [10]",10},
             {"Unitless [20]",20},
+            {"Unitless [26]",26},
             {"Unitless [40]",40},
             {"Unitless [60]",60},
             {"Unitless [63]",63},
@@ -200,6 +204,11 @@ static std::vector<std::shared_ptr<XParam>> get_parameters_list(){
         append_int(ret,openhd::WB_BW_VIA_RC_CHANNEL,
                    ImprovedIntSetting::createEnum(disable_or_channels),
                    "Dynamically change the BW via RC. NOT ALWAYS SAFE TO USE !"
+                   );
+        append_int(ret,openhd::WB_POWER_VIA_RC_CHANNEL,
+                   ImprovedIntSetting::createEnum(disable_or_channels),
+                   "Dynamically change the POWER during flight using your RC and a specific channel "
+                   "(similar to how flight modes work)."
                    );
 
     }

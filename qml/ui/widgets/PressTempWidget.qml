@@ -17,8 +17,8 @@ BaseWidget {
     bw_verbose_name: "PREASSURE SENSOR TEMP"
 
     defaultAlignment: 1
-    defaultXOffset: 12
-    defaultYOffset: 32
+    defaultXOffset: 140
+    defaultYOffset: 55
     defaultHCenter: false
     defaultVCenter: false
 

@@ -5,24 +5,24 @@ import QtQuick.Layouts 1.12
 import Qt.labs.settings 1.0
 
 import OpenHD 1.0
-
+//second bmp280 or another barometer used to monitor AC180 temperature so wifi icon was used
 BaseWidget {
-    id: imuTempWidget
+    id: pressTempWidget2
     width: 30
     height: 30
 
-    visible: settings.show_imu_temp && settings.show_widgets
+    visible: settings.show_press_temp2 && settings.show_widgets
 
-    widgetIdentifier: "imu_temp_widget"
-    bw_verbose_name: "IMU TEMPERATURE"
+    widgetIdentifier: "press_temp_widget2"
+    bw_verbose_name: "PREASSURE2 SENSOR TEMP"
 
     defaultAlignment: 1
-    defaultXOffset: 27
+    defaultXOffset: 205
     defaultYOffset: 32
     defaultHCenter: false
     defaultVCenter: false
 
-    hasWidgetDetail: true
+    hasWidgetDetail: false
 
     widgetDetailComponent: ScrollView {
 
@@ -49,12 +49,12 @@ BaseWidget {
                     height: parent.height
                     anchors.rightMargin: 6
                     anchors.right: parent.right
-                    checked: settings.imu_temp_declutter
-                    onCheckedChanged: settings.imu_temp_declutter = checked
+                    checked: settings.press_temp_declutter2
+                    onCheckedChanged: settings.press_temp_declutter2 = checked
                 }
             }
             Item {
-                id: imu_temp_warn_label
+                id: press_temp_warn_label2
                 width: parent.width
                 height: 32
                 Text {
@@ -67,7 +67,7 @@ BaseWidget {
                     verticalAlignment: Text.AlignVCenter
                 }
                 Text {
-                    text: settings.imu_temp_warn
+                    text: settings.press_temp_warn2
                     color: settings.color_warn
                     height: parent.height
                     font.bold: true
@@ -76,10 +76,10 @@ BaseWidget {
                     verticalAlignment: Text.AlignVCenter
                 }
                 Slider {
-                    id: imu_temp_warn_Slider
+                    id: press_temp_warn_Slider2
                     orientation: Qt.Horizontal
                     from: 75
-                    value: settings.imu_temp_warn
+                    value: settings.press_temp_warn2
                     to: 150
                     stepSize: 1
                     height: parent.height
@@ -88,13 +88,13 @@ BaseWidget {
                     width: parent.width - 96
 
                     onValueChanged: {
-                        settings.imu_temp_warn = Math.round(
-                                    imu_temp_warn_Slider.value * 10) / 10.0
+                        settings.press_temp_warn2 = Math.round(
+                                    press_temp_warn_Slider2.value * 10) / 10.0
                     }
                 }
             }
             Item {
-                id: imu_temp_caution_label
+                id: press_temp_caution_label2
                 width: parent.width
                 height: 32
                 Text {
@@ -107,19 +107,19 @@ BaseWidget {
                     verticalAlignment: Text.AlignVCenter
                 }
                 Text {
-                    text: settings.imu_temp_caution
+                    text: settings.press_temp_caution2
                     color: settings.color_caution
                     height: parent.height
                     font.bold: true
                     font.pixelSize: detailPanelFontPixels
-                    anchors.left: imu_temp_caution_label.right
+                    anchors.left: press_temp_caution_label2.right
                     verticalAlignment: Text.AlignVCenter
                 }
                 Slider {
-                    id: imu_temp_caution_Slider
+                    id: press_temp_caution_Slider2
                     orientation: Qt.Horizontal
                     from: 30
-                    value: settings.imu_temp_caution
+                    value: settings.press_temp_caution2
                     to: 74
                     stepSize: 1
                     height: parent.height
@@ -128,8 +128,8 @@ BaseWidget {
                     width: parent.width - 96
 
                     onValueChanged: {
-                        settings.imu_temp_caution = Math.round(
-                                    imu_temp_caution_Slider.value * 10) / 10.0
+                        settings.press_temp_caution2 = Math.round(
+                                    press_temp_caution_Slider2.value * 10) / 10.0
                     }
                 }
             }
@@ -145,8 +145,8 @@ BaseWidget {
 
         Text {
             id: temp_glyph
-            color: _fcMavlinkSystem.imu_temp_degree >= settings.imu_temp_caution ? (_fcMavlinkSystem.imu_temp_degree >= settings.imu_temp_warn ? settings.color_warn : settings.color_caution) : settings.color_shape
-            text: "\uf5d2"
+            color: _fcMavlinkSystem.preasure_sensor2_temperature_degree >= settings.press_temp_caution2 ? (_fcMavlinkSystem.preasure_sensor2_temperature_degree >= settings.press_temp_warn2 ? settings.color_warn : settings.color_caution) : settings.color_shape
+            text: "\uf1eb"
             anchors.left: parent.left
             anchors.bottom: parent.bottom
             font.family: "Font Awesome 5 Free"
@@ -160,15 +160,15 @@ BaseWidget {
         }
 
         Text {
-            id: imu_temp
+            id: press_temp2
             color: {
-                if (_fcMavlinkSystem.imu_temp_degree >= settings.imu_temp_warn) {
+                if (_fcMavlinkSystem.preasure_sensor2_temperature_degree >= settings.press_temp_warn2) {
                     widgetInner.visible = true
                     return settings.color_warn
-                } else if (_fcMavlinkSystem.imu_temp_degree > settings.imu_temp_caution) {
+                } else if (_fcMavlinkSystem.preasure_sensor2_temperature_degree > settings.press_temp_caution2) {
                     widgetInner.visible = true
                     return settings.color_caution
-                } else if (settings.imu_temp_declutter == true
+                } else if (settings.press_temp_declutter2 == true
                            && _fcMavlinkSystem.armed == true) {
                     widgetInner.visible = false
                     return settings.color_text
@@ -177,7 +177,7 @@ BaseWidget {
                     return settings.color_text
                 }
             }
-            text: _fcMavlinkSystem.imu_temp_degree == 0 ? qsTr("N/A") : _fcMavlinkSystem.imu_temp_degree + "°"
+            text: _fcMavlinkSystem.preasure_sensor2_temperature_degree == 0 ? qsTr("N/A") : _fcMavlinkSystem.preasure_sensor2_temperature_degree + "°"
             anchors.left: temp_glyph.right
             anchors.leftMargin: 2
             anchors.bottom: parent.bottom
@@ -190,5 +190,7 @@ BaseWidget {
             style: Text.Outline
             styleColor: settings.color_glow
         }
+
     }
+
 }

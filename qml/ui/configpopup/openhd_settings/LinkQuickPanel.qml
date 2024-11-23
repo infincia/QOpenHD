@@ -208,31 +208,30 @@ Rectangle{
                         }
                         TabBar{
                             id: filter_tab_bar
-                            width:  200
+                            width:  350
                             currentIndex: settings.qopenhd_frequency_filter_selection
                             onCurrentIndexChanged: {
-                                if(currentIndex!=settings.qopenhd_frequency_filter_selection){
-                                    settings.qopenhd_frequency_filter_selection=currentIndex;
+                                if(currentIndex != settings.qopenhd_frequency_filter_selection){
+                                    settings.qopenhd_frequency_filter_selection = currentIndex;
                                     function_rebuild_ui();
-                                    if(currentIndex==1){
-                                        _qopenhd.show_toast("2.4G is almost always polluted by WiFi. Not recommended.")
-                                    }else if(currentIndex==2){
-                                        _qopenhd.show_toast("Please watch out for wifi pollution. Using DEF is highly recommended !")
+                                    if(currentIndex == 1){
+                                        _qopenhd.show_toast("2.4G is almost always polluted by WiFi. Not recommended.");
+                                    } else if(currentIndex == 2){
+                                        _qopenhd.show_toast("Please watch out for wifi pollution. Using DEF is highly recommended!");
                                     }
                                 }
                             }
                             TabButton{
-                                text: "OpenHD"
+                                text: "OpenHD" // Changed from uppercase to mixed case
                             }
                             TabButton{
                                 text: "2.4G"
                                 enabled: {
-                                    if(_ohdSystemAir.is_alive && _ohdSystemAir.ohd_platform_type==30){
+                                    if(_ohdSystemAir.is_alive && _ohdSystemAir.ohd_platform_type == 30){
                                         // X20 does not support 2.4G
                                         return false;
                                     }
                                     return true;
-
                                 }
                             }
                             TabButton{
@@ -241,8 +240,11 @@ Rectangle{
                             enabled: comboBoxFreq.enabled
                             TabButton{
                                 text: "Custom"
+                                onClicked: {
+                                    settings.qopenhd_frequency_filter_selection = 0;
+                                    function_rebuild_ui();
+                                }
                             }
-                            enabled: comboBoxFreq.enabled
                         }
                         /*ButtonIconInfo2{
                     Layout.alignment: Qt.AlignRight

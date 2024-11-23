@@ -222,7 +222,7 @@ Rectangle{
                                 }
                             }
                             TabButton{
-                                text: "DEF"
+                                text: "OpenHD"
                             }
                             TabButton{
                                 text: "2.4G"
@@ -237,6 +237,10 @@ Rectangle{
                             }
                             TabButton{
                                 text: "5.8G"
+                            }
+                            enabled: comboBoxFreq.enabled
+                            TabButton{
+                                text: "Custom"
                             }
                             enabled: comboBoxFreq.enabled
                         }

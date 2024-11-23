@@ -20,6 +20,11 @@ QList<int> FrequencyHelper::get_frequencies(int filter)
         for(auto& channel:tmp){
             ret.push_back(channel.frequency);
         }
+    }else if(filter==3){
+        auto tmp=openhd::get_openhd_channels_licensed();
+        for(auto& channel:tmp){
+            ret.push_back(channel.frequency);
+        }
     }else{
         const auto frequency_items=openhd::get_all_channels_2G_5G();
         for(auto& item:frequency_items){
@@ -29,7 +34,7 @@ QList<int> FrequencyHelper::get_frequencies(int filter)
                         ret.push_back(item.frequency);
                     }
                 }else{
-                    if(item.frequency>3000){
+                    if(item.frequency>=5180 && item.frequency<=5865){
                         ret.push_back(item.frequency);
                     }
                 }

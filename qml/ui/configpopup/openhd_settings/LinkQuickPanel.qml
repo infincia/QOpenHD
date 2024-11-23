@@ -5,7 +5,7 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 
 import QtQuick.Controls.Material 2.12
- 
+
 
 import Qt.labs.settings 1.0
 
@@ -205,50 +205,44 @@ Rectangle{
                                 // Change the freuquency
                                 dialoqueFreqChangeAirGnd.initialize_and_show_frequency(frequency_mhz);
                             }
-                            enabled: _ohdSystemGround.is_alive && _ohdSystemGround.wb_gnd_operating_mode==0;
+                            // enabled: _ohdSystemGround.is_alive && _ohdSystemGround.wb_gnd_operating_mode==0;
                         }
-                        TabBar{
+                        TabBar {
                             id: filter_tab_bar
-                            width:  350
+                            width: 350
                             currentIndex: settings.qopenhd_frequency_filter_selection
                             onCurrentIndexChanged: {
-                                if(currentIndex != settings.qopenhd_frequency_filter_selection){
+                                if (currentIndex != settings.qopenhd_frequency_filter_selection) {
                                     settings.qopenhd_frequency_filter_selection = currentIndex;
+                                    console.log("Tab changed to index:", currentIndex);
                                     function_rebuild_ui();
-                                    if(currentIndex == 1){
-                                        _qopenhd.show_toast("2.4G is almost always polluted by WiFi. Not recommended.");
-                                    } else if(currentIndex == 2){
-                                        _qopenhd.show_toast("Please watch out for wifi pollution. Using DEF is highly recommended!");
-                                    }
                                 }
                             }
-                            TabButton{
+                            TabButton {
                                 text: "OpenHD"
                                 font.capitalization: Font.MixedCase
                             }
-                            TabButton{
+                            TabButton {
                                 text: "2.4G"
                                 enabled: {
-                                    if(_ohdSystemAir.is_alive && _ohdSystemAir.ohd_platform_type == 30){
+                                    if (_ohdSystemAir.is_alive && _ohdSystemAir.ohd_platform_type == 30) {
                                         // X20 does not support 2.4G
                                         return false;
                                     }
                                     return true;
                                 }
                             }
-                            TabButton{
+                            TabButton {
                                 text: "5.8G"
                             }
                             enabled: comboBoxFreq.enabled
-                            TabButton{
+                            TabButton {
                                 text: "Custom"
                                 font.capitalization: Font.MixedCase
-                                onClicked: {
-                                    settings.qopenhd_frequency_filter_selection = 0;
-                                    function_rebuild_ui();
-                                }
+                                visible: settings.dev_show_5180mhz_lowband
                             }
                         }
+
                         /*ButtonIconInfo2{
                     Layout.alignment: Qt.AlignRight
                     visible:false

@@ -282,6 +282,10 @@ static std::vector<WifiChannel> get_openhd_channels_1_to_7() {
   std::vector<uint32_t> frequencies = {5700, 5745, 5785, 5825, 5865, 5260, 5280};
   return frequencies_to_channels(frequencies);
 }
+static std::vector<WifiChannel> get_openhd_channels_licensed() {
+  std::vector<uint32_t> frequencies = {5080,5100,5120,5140,5160,5905,5925,5945,5965,5985,6005,6025,6045,6065,6085};
+  return frequencies_to_channels(frequencies);
+}
 
 static std::vector<WifiChannel> filter_ht40plus_only(
     const std::vector<uint32_t>& frequencies) {

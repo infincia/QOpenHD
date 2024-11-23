@@ -205,7 +205,7 @@ Rectangle{
                                 // Change the freuquency
                                 dialoqueFreqChangeAirGnd.initialize_and_show_frequency(frequency_mhz);
                             }
-                            // enabled: _ohdSystemGround.is_alive && _ohdSystemGround.wb_gnd_operating_mode==0;
+                            enabled: _ohdSystemGround.is_alive && _ohdSystemGround.wb_gnd_operating_mode==0;
                         }
                         TabBar {
                             id: filter_tab_bar

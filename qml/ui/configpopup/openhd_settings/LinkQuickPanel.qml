@@ -166,6 +166,7 @@ Rectangle{
                                     m_is_2G: value_frequency_mhz < 3000 && value_frequency_mhz > 100
                                     m_show_radar: _frequencyHelper.get_frequency_radar(value_frequency_mhz)
                                     m_openhd_race_band: _frequencyHelper.get_frequency_openhd_race_band(value_frequency_mhz)
+                                    m_openhd_licensed_band: _frequencyHelper.get_frequency_openhd_licensed_band(value_frequency_mhz)
                                     m_pollution_pps: _pollutionHelper.pollution_get_last_scan_pollution_for_frequency(value_frequency_mhz)
                                 }
                                 highlighted: comboBoxFreq.highlightedIndex === index
@@ -222,7 +223,8 @@ Rectangle{
                                 }
                             }
                             TabButton{
-                                text: "OpenHD" // Changed from uppercase to mixed case
+                                text: "OpenHD"
+                                font.capitalization: Font.MixedCase
                             }
                             TabButton{
                                 text: "2.4G"
@@ -240,6 +242,7 @@ Rectangle{
                             enabled: comboBoxFreq.enabled
                             TabButton{
                                 text: "Custom"
+                                font.capitalization: Font.MixedCase
                                 onClicked: {
                                     settings.qopenhd_frequency_filter_selection = 0;
                                     function_rebuild_ui();

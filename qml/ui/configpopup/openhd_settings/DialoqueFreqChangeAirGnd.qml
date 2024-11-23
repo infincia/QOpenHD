@@ -46,6 +46,7 @@ Card {
     function get_card_body_string(){
         const channel_nr=_frequencyHelper.get_frequency_channel_nr(m_wanted_frequency);
         const channel_nr_openhd=_frequencyHelper.get_frequency_openhd_race_band(m_wanted_frequency);
+        const channel_nr_openhd_licensed=_frequencyHelper.get_frequency_openhd_licensed_band(m_wanted_frequency);
         return "Set AIR and GROUND to CHANNEL ["+channel_nr+"]\n"+
                 "("+m_wanted_frequency+" Mhz) ?";
 

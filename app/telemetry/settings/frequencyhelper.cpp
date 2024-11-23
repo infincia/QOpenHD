@@ -107,6 +107,57 @@ int FrequencyHelper::get_frequency_openhd_race_band(int frequency_mhz)
     }
     return -1;
 }
+int FrequencyHelper::get_frequency_openhd_licensed_band(int frequency_mhz)
+{
+    // Frequencies: 5080,5100,5120,5140,5160,5905,5925,5945,5965,5985,6005,6025,6045,6065,6085
+    if(frequency_mhz==5080){
+        return 1;
+    }
+    if(frequency_mhz==5100){
+        return 2;
+    }
+    if(frequency_mhz==5120){
+        return 3;
+    }
+    if(frequency_mhz==5140){
+        return 4;
+    }
+    if(frequency_mhz==5160){
+        return 5;
+    }
+    if(frequency_mhz==5905){
+        return 6;
+    }
+    if(frequency_mhz==5925){
+        return 7;
+    }
+    if(frequency_mhz==5945){
+        return 8;
+    }
+    if(frequency_mhz==5965){
+        return 9;
+    }
+    if(frequency_mhz==5985){
+        return 10;
+    }
+    if(frequency_mhz==6005){
+        return 11;
+    }
+    if(frequency_mhz==6025){
+        return 12;
+    }
+    if(frequency_mhz==6045){
+        return 13;
+    }
+    if(frequency_mhz==6065){
+        return 14;
+    }
+    if(frequency_mhz==6085){
+        return 15;
+    }
+    return -1;
+}
+
 
 int FrequencyHelper::get_frequency_channel_nr(int frequency_mhz)
 {

@@ -27,6 +27,8 @@ Rectangle{
     property bool m_show_radar: false
 
     property int m_openhd_race_band: -1
+    property int m_openhd_licensed_band: -1
+
 
     property int m_pollution_pps: -1
 

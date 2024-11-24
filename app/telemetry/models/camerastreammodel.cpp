@@ -64,7 +64,7 @@ QString CameraStreamModel::camera_codec_to_string(int camera_codec)
 QString CameraStreamModel::camera_recording_mode_to_string(int recording_mode)
 {
     if(recording_mode<0)return "                   n/a";
-    if(recording_mode==0)return "        off";
+    if(recording_mode==0)return "                             off";
     if(recording_mode==1)return "                   on";
     return "error";
 }

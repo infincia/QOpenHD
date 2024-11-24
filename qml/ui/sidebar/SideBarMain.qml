@@ -93,7 +93,7 @@ Item {
 
     // Called when the sidebar is opened and the user clicked somewhere on the screen where there is no sidebar
     function notify_sidebar_user_clicked_outside(){
-        if(stack_manager.visible){
+        if(visible){
             console.log("Outside area clicked, closing sidebar");
             close();
         }

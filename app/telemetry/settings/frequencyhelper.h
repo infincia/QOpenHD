@@ -22,6 +22,7 @@ public:
 
     Q_INVOKABLE bool get_frequency_radar(int frequency_mhz);
     Q_INVOKABLE int get_frequency_openhd_race_band(int frequency_mhz);
+    Q_INVOKABLE int get_frequency_openhd_licensed_band(int frequency_mhz);
     Q_INVOKABLE int get_frequency_channel_nr(int frequency_mhz);
     // --------------
     Q_INVOKABLE bool hw_supports_frequency_threadsafe(int frequency_mhz);

@@ -5,7 +5,7 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 
 import QtQuick.Controls.Material 2.12
- 
+
 
 import Qt.labs.settings 1.0
 
@@ -166,6 +166,7 @@ Rectangle{
                                     m_is_2G: value_frequency_mhz < 3000 && value_frequency_mhz > 100
                                     m_show_radar: _frequencyHelper.get_frequency_radar(value_frequency_mhz)
                                     m_openhd_race_band: _frequencyHelper.get_frequency_openhd_race_band(value_frequency_mhz)
+                                    m_openhd_licensed_band: _frequencyHelper.get_frequency_openhd_licensed_band(value_frequency_mhz)
                                     m_pollution_pps: _pollutionHelper.pollution_get_last_scan_pollution_for_frequency(value_frequency_mhz)
                                 }
                                 highlighted: comboBoxFreq.highlightedIndex === index
@@ -206,40 +207,42 @@ Rectangle{
                             }
                             enabled: _ohdSystemGround.is_alive && _ohdSystemGround.wb_gnd_operating_mode==0;
                         }
-                        TabBar{
+                        TabBar {
                             id: filter_tab_bar
-                            width:  200
+                            width: 350
                             currentIndex: settings.qopenhd_frequency_filter_selection
                             onCurrentIndexChanged: {
-                                if(currentIndex!=settings.qopenhd_frequency_filter_selection){
-                                    settings.qopenhd_frequency_filter_selection=currentIndex;
+                                if (currentIndex != settings.qopenhd_frequency_filter_selection) {
+                                    settings.qopenhd_frequency_filter_selection = currentIndex;
+                                    console.log("Tab changed to index:", currentIndex);
                                     function_rebuild_ui();
-                                    if(currentIndex==1){
-                                        _qopenhd.show_toast("2.4G is almost always polluted by WiFi. Not recommended.")
-                                    }else if(currentIndex==2){
-                                        _qopenhd.show_toast("Please watch out for wifi pollution. Using DEF is highly recommended !")
-                                    }
                                 }
                             }
-                            TabButton{
-                                text: "DEF"
+                            TabButton {
+                                text: "OpenHD"
+                                font.capitalization: Font.MixedCase
                             }
-                            TabButton{
+                            TabButton {
                                 text: "2.4G"
                                 enabled: {
-                                    if(_ohdSystemAir.is_alive && _ohdSystemAir.ohd_platform_type==30){
+                                    if (_ohdSystemAir.is_alive && _ohdSystemAir.ohd_platform_type == 30) {
                                         // X20 does not support 2.4G
                                         return false;
                                     }
                                     return true;
-
                                 }
                             }
-                            TabButton{
+                            TabButton {
                                 text: "5.8G"
                             }
                             enabled: comboBoxFreq.enabled
+                            TabButton {
+                                text: "Custom"
+                                font.capitalization: Font.MixedCase
+                                visible: settings.dev_show_5180mhz_lowband
+                            }
                         }
+
                         /*ButtonIconInfo2{
                     Layout.alignment: Qt.AlignRight
                     visible:false

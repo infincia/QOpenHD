@@ -256,6 +256,7 @@ BaseJoyEditElement2{
         }
         if(m_param_id==mPARAM_ID_FREQUENCY_SCAN){
                 m_param_exists=true;
+                populate_display_text="DEBUG";
             }
         if(m_param_id==mPARAM_ID_FREQUENCY){
             if(curr_channel_mhz<=0){

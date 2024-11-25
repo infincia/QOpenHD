@@ -53,7 +53,7 @@ SideBarBasePanel {
                 text: {
                     var tmp = "   Status";
                     if (!_ohdSystemAir.is_alive) {
-                        return tmp + "                   disabled ";
+                        return tmp + "                 disabled ";
                     }
                     return tmp + _cameraStreamModelPrimary.camera_recording_mode_to_string(_cameraStreamModelPrimary.air_recording_active)
                 }

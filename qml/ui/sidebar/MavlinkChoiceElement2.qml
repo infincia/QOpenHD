@@ -141,11 +141,11 @@ BaseJoyEditElement2{
         }else{
             m_param_exists=m_settings_model.param_int_exists(m_param_id)
         }
-        if(!m_param_exists){
-            console.log("Param "+m_param_id+" does not exist");
-            populate_display_text="NOT\nAVAILABLE";
-            return;
-        }
+        // if(!m_param_exists){
+        //     console.log("Param "+m_param_id+" does not exist");
+        //     populate_display_text="NOT\nAVAILABLE";
+        //     return;
+        // }
         if(override_takes_string_param){
             var actual_value_string=m_settings_model.get_cached_string(m_param_id);
             update_display_text(actual_value_string);

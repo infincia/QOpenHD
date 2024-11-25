@@ -228,7 +228,7 @@ BaseJoyEditElement{
             m_model_index=-1;
             populate_enable_left=false;
             populate_enable_right=false;
-            populate_display_text="NOT\nAVAILABLE";
+            populate_display_text="NOT\nAVAILABLE_404";
             return;
         }
         if(override_takes_string_param){

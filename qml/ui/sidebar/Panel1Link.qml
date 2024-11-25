@@ -43,24 +43,24 @@ SideBarBasePanel{
             }
         }*/
         MavlinkChoiceElement2{
-            id:edit_frequency_element
-            m_title: "Frequency"
-            m_param_id: mPARAM_ID_FREQUENCY
-            m_settings_model: _ohdSystemAirSettingsModel
-            onGoto_previous: {
-                sidebar.regain_control_on_sidebar_stack()
-            }
-            onGoto_next: {
-                scan_frequency_element.takeover_control()
-            }
-        }
-        MavlinkChoiceElement2{
             id:scan_frequency_element
             m_title: "Scan for Air"
             m_param_id: mPARAM_ID_FREQUENCY_SCAN
             m_settings_model: _ohdSystemGroundSettings
             onGoto_previous: {
-                edit_frequency_element.takeover_control();
+                sidebar.regain_control_on_sidebar_stack();
+            }
+            onGoto_next: {
+                edit_frequency_element.takeover_control()
+            }
+        }
+        MavlinkChoiceElement2{
+            id:edit_frequency_element
+            m_title: "Frequency"
+            m_param_id: mPARAM_ID_FREQUENCY
+            m_settings_model: _ohdSystemAirSettingsModel
+            onGoto_previous: {
+                scan_frequency_element.takeover_control()
             }
             onGoto_next: {
                 edit_channel_width_element.takeover_control()

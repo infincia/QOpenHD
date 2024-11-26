@@ -166,7 +166,6 @@ Item {
     }
     ListModel{
         id: elements_frequency_scan
-        ListElement {value: 0; verbose:"->"}
         ListElement {value: 0; verbose:"OHD"}
         ListElement {value: 1; verbose:"5.8"}
         ListElement {value: 2; verbose:"2.4"}

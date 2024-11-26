@@ -77,10 +77,10 @@ BaseJoyEditElement2{
     }
 
     function open_choices_menu(clickable){
-        if(!m_param_exists){
-            _qopenhd.show_toast("N/A");
-            return;
-        }
+        // if(!m_param_exists){
+        //     _qopenhd.show_toast("N/A");
+        //     return;
+        // }
         if(m_settings_model.ui_is_busy){
             _qopenhd.show_toast("Busy, please try again later");
             return;
@@ -143,6 +143,7 @@ BaseJoyEditElement2{
         }
         if(m_param_id==mPARAM_ID_FREQUENCY_SCAN){
                 m_param_exists=true;
+                _wbLinkSettingsHelper.change_param_air_and_ground_frequency(value_new)
             }
         if(!m_param_exists){
             console.log("Param "+m_param_id+" does not exist");

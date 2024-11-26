@@ -5,7 +5,7 @@ SideBarBasePanel{
 
 
     function takeover_control(){
-        edit_frequency_element.takeover_control();
+        scan_frequency_element.takeover_control();
     }
 
     Column {

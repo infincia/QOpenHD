@@ -315,5 +315,6 @@
         <file>ui/sidebar/ActionElement.qml</file>
         <file>ui/widgets/BatteryTempWidget.qml</file>
         <file>ui/widgets/PressTempWidget2.qml</file>
+        <file>ui/widgets/PressTempWidget3.qml</file>
     </qresource>
 </RCC>

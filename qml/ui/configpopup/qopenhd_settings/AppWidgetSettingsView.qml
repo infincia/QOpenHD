@@ -46,6 +46,7 @@ ScrollView {
         settings.show_flight_mah_km=enable_elements;
         settings.show_press_temp=enable_elements;
         settings.show_press_temp2=enable_elements
+        settings.show_press_temp3=enable_elements
         settings.show_imu_temp=enable_elements;
         settings.show_airspeed_temp=enable_elements;
         settings.show_esc_temp=enable_elements;
@@ -464,6 +465,34 @@ ScrollView {
                         anchors.verticalCenter: parent.verticalCenter
                         checked: settings.show_press_temp2
                         onCheckedChanged: settings.show_press_temp2 = checked
+                    }
+                }
+                
+                Rectangle {
+                    width: parent.width
+                    height: rowHeight
+                    color: (Positioner.index % 2 == 0) ? "#8cbfd7f3" : "#00000000"
+
+                    Text {
+                        text: qsTr("Show Pressure Sensor 3 Temperature")
+                        font.weight: Font.Bold
+                        font.pixelSize: 13
+                        anchors.leftMargin: 8
+                        verticalAlignment: Text.AlignVCenter
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: 224
+                        height: elementHeight
+                        anchors.left: parent.left
+                    }
+
+                    Switch {
+                        width: 32
+                        height: elementHeight
+                        anchors.rightMargin: Qt.inputMethod.visible ? 96 : 36
+                        anchors.right: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                        checked: settings.show_press_temp3
+                        onCheckedChanged: settings.show_press_temp3 = checked
                     }
                 }
 

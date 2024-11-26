@@ -183,6 +183,13 @@ bool FCMavlinkSystem::process_message(const mavlink_message_t &msg)
         //qDebug() << "Temp:" <<  scaled_pressure2.temperature;
         break;
     }
+    case MAVLINK_MSG_ID_SCALED_PRESSURE3:{
+        mavlink_scaled_pressure_t scaled_pressure3;
+        mavlink_msg_scaled_pressure_decode(&msg, &scaled_pressure3);
+        set_preasure_sensor3_temperature_degree((int)scaled_pressure3.temperature/100);
+        //qDebug() << "Temp:" <<  scaled_pressure2.temperature;
+        break;
+    }
     case MAVLINK_MSG_ID_ATTITUDE:{
         mavlink_attitude_t attitude;
         mavlink_msg_attitude_decode (&msg, &attitude);

@@ -64,7 +64,7 @@ SideBarBasePanel{
             m_param_id: "SHARPNESS"
             m_settings_model: _airCameraSettingsModel
             onGoto_previous: {
-               contrast.takeover_control();
+               metering.takeover_control();
             }
             onGoto_next: {
                 sidebar.regain_control_on_sidebar_stack()

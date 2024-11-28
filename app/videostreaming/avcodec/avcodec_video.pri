@@ -1,6 +1,7 @@
 INCLUDEPATH += $$PWD
+INCLUDEPATH += C:/ffmpeg/include
 
-LIBS += -lavcodec -lavutil -lavformat
+LIBS += -LC:/ffmpeg/lib -lavcodec -lavutil -lavformat
 # TODO dirty
 LIBS += -lGLESv2 -lEGL
 

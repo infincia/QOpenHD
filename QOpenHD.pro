@@ -234,6 +234,7 @@ JetsonBuild {
 WindowsBuild {
     # This aparently makes qt use absolute paths, otherwise we get compile issues ?
     QMAKE_PROJECT_DEPTH = 0
+    include(app/videostreaming/avcodec/avcodec_video.pri)
 }
 
 AndroidBuild {

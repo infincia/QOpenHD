@@ -234,16 +234,17 @@ JetsonBuild {
 WindowsBuild {
     # This aparently makes qt use absolute paths, otherwise we get compile issues ?
     QMAKE_PROJECT_DEPTH = 0
-    include(app/videostreaming/avcodec/avcodec_video.pri)
+    #include(app/videostreaming/gstreamer/gst_video.pri)
+    #include(app/videostreaming/avcodec/avcodec_video.pri)
     # Path to FFmpeg headers
-    INCLUDEPATH += C:/ffmpeg
-    INCLUDEPATH += C:/ffmpeg/libavutil/
+    #   INCLUDEPATH += C:/ffmpeg
+    #INCLUDEPATH += C:/ffmpeg/libavutil/
 
     # Path to FFmpeg libraries
-    LIBS += -LC:/ffmpeg/lib
+    #LIBS += -LC:/ffmpeg/lib
 
     # Link against the required FFmpeg libraries
-    LIBS += -lavcodec -lavformat -lavutil -lswscale -lswresample
+    #LIBS += -lavcodec -lavformat -lavutil -lswscale -lswresample
 }
 
 AndroidBuild {

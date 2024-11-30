@@ -203,7 +203,7 @@ Settings {
     property double press_temp_warn: 75
     property double press_temp_caution: 60
 
-    property bool show_press_temp2: true
+    property bool show_press_temp2: false
     property bool press_temp_declutter2: false
     //AC180 or another 8812 wifi module temperature ranges (datasheet 125 max)
     property double press_temp_warn2: 75
@@ -215,7 +215,7 @@ Settings {
     property double airspeed_temp_warn: 0
     property double airspeed_temp_caution: 10
 
-    property bool show_esc_temp: true
+    property bool show_esc_temp: false
     property bool esc_temp_declutter: false
     property double esc_temp_warn: 75
     property double esc_temp_caution: 60

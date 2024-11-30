@@ -51,7 +51,7 @@ SideBarBasePanel {
                 anchors.centerIn: parent
                 anchors.leftMargin: 40
                 text: {
-                    var tmp = "   Status";
+                    var tmp = "      Status";
                     if (!_ohdSystemAir.is_alive) {
                         return tmp + "                 disabled ";
                     }

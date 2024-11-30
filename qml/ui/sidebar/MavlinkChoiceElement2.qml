@@ -35,7 +35,6 @@ BaseJoyEditElement2{
     // EXTRA
     property string mPARAM_ID_CHANNEL_WIDTH: "CHANNEL_WIDTH"
     property string mPARAM_ID_FREQUENCY: "FREQUENCY"
-    property string mPARAM_ID_FREQUENCY_SCAN: "FREQUENCY_SCAN"
     property string mPARAM_ID_RATE: "RATE"
 
 

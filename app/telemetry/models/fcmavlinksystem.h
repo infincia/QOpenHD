@@ -131,6 +131,7 @@ public: // Stuff needs to be public for qt
     L_RO_PROP(int,imu_temp_degree,set_imu_temp_degree,0);
     L_RO_PROP(int,preasure_sensor_temperature_degree,set_preasure_sensor_temperature_degree,0)
     L_RO_PROP(int,preasure_sensor2_temperature_degree,set_preasure_sensor2_temperature_degree,0)
+    L_RO_PROP(int,preasure_sensor3_temperature_degree,set_preasure_sensor3_temperature_degree,0)
     L_RO_PROP(int,airspeed_sensor_temperature_degree,set_airspeed_sensor_temperature_degree,99)
     L_RO_PROP(int,esc_temp,set_esc_temp,0);
     L_RO_PROP(int,battery_temperature,set_battery_temperature,0)

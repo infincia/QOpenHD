@@ -374,6 +374,10 @@ Item {
         PressTempWidget2 {
             id: press_temp2
         }
+        
+        PressTempWidget3 {
+            id: press_temp3
+        }
 
         RCRssiWidget {
             id: rc_rssi_widget

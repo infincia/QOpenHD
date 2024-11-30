@@ -170,6 +170,7 @@ Item {
         ListElement {value: 1; verbose:"5.8"}
         ListElement {value: 2; verbose:"2.4"}
         ListElement {value: 3; verbose:"ALL"}
+        //ListElement {value: 3; verbose:"CUSTOM"}
     }
     ListModel{
         id: elements_model_rate

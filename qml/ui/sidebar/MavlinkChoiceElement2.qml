@@ -76,10 +76,10 @@ BaseJoyEditElement2{
     }
 
     function open_choices_menu(clickable){
-        // if(!m_param_exists){
-        //     _qopenhd.show_toast("N/A");
-        //     return;
-        // }
+        if(!m_param_exists){
+            _qopenhd.show_toast("N/A");
+            return;
+        }
         if(m_settings_model.ui_is_busy){
             _qopenhd.show_toast("Busy, please try again later");
             return;

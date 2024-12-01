@@ -1,9 +1,20 @@
 INCLUDEPATH += $$PWD
-INCLUDEPATH += C:/ffmpeg/include
 
-LIBS += -LC:/ffmpeg/lib -lavcodec -lavutil -lavformat
 # TODO dirty
-LIBS += -lGLESv2 -lEGL
+WindowsBuild {
+    INCLUDEPATH += $$PWD/../../../build-libs-windows/ffmpeg/include
+    LIBS += -L$$PWD/../../../build-libs-windows/ffmpeg/lib -lavcodec -lavutil -lavformat
+
+    INCLUDEPATH += $$PWD/../../../build-libs-windows/angle-x64/include
+    LIBS += -L$$PWD/../../../build-libs-windows/angle-x64/bin -lGLESv2 -lEGL
+
+    DEFINES += EGL_EGLEXT_PROTOTYPES
+    DEFINES += GL_GLEXT_PROTOTYPES
+#    LIBS += -lOpengl32
+}
+else {
+    LIBS += -lGLESv2 -lEGL
+}
 
 # just using the something something webrtc from stephen was the easiest solution.
 #include(../../lib/h264/h264.pri)
@@ -21,8 +32,7 @@ HEADERS += \
     $$PWD/gl/gl_videorenderer.h \
     $$PWD/texturerenderer.h \
     $$PWD/avcodec_decoder.h \
-
-
+    $$PWD/avcodec_helper.hpp
 
 # experimental
 #INCLUDEPATH += /usr/local/include/uvgrtp

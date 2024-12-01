@@ -2,7 +2,14 @@
 #include "UDPReceiver.h"
 #include "common/StringHelper.hpp"
 #include "common/SchedulingHelper.hpp"
+
+#if defined(__windows__)
+#include <winsock2.h>
+#define SHUT_RD SD_RECEIVE
+#else
 #include <arpa/inet.h>
+#endif
+
 #include <utility>
 #include <vector>
 #include <sstream>
@@ -10,10 +17,11 @@
 #include <cstring>
 
 #include <sys/time.h>
-#include <sys/resource.h>
+
 #include <iostream>
 
 #include <qdebug.h>
+
 
 UDPReceiver::UDPReceiver(std::string tag,Configuration config,DATA_CALLBACK onDataReceivedCallbackX)
     :
@@ -58,7 +66,7 @@ void UDPReceiver::stopReceiving() {
 static void increase_socket_recv_buff_size(int sockfd, const int wanted_rcvbuff_size_bytes) {
   int recvBufferSize=0;
   socklen_t len=sizeof(recvBufferSize);
-  getsockopt(sockfd, SOL_SOCKET, SO_RCVBUF, &recvBufferSize, &len);
+  getsockopt(sockfd, SOL_SOCKET, SO_RCVBUF, (char *)&recvBufferSize, &len);
   {
     std::stringstream ss;
     ss<<"Default UDP socket recv buffer size:"<<StringHelper::memorySizeReadable(recvBufferSize)<<" wanted:"<<StringHelper::memorySizeReadable(wanted_rcvbuff_size_bytes)<<"\n";
@@ -68,12 +76,12 @@ static void increase_socket_recv_buff_size(int sockfd, const int wanted_rcvbuff_
   if(wanted_rcvbuff_size_bytes>(size_t)recvBufferSize){
     int wanted_size=wanted_rcvbuff_size_bytes;
     recvBufferSize=wanted_rcvbuff_size_bytes;
-    if(setsockopt(sockfd, SOL_SOCKET, SO_RCVBUF, &wanted_size,len)) {
+    if(setsockopt(sockfd, SOL_SOCKET, SO_RCVBUF, (char *)&wanted_size,len)) {
       std::cerr<<"Cannot increase UDP buffer size to "<<StringHelper::memorySizeReadable(wanted_rcvbuff_size_bytes)<<"\n";
     }
     // Fetch it again to double check
     recvBufferSize=-1;
-    getsockopt(sockfd, SOL_SOCKET, SO_RCVBUF, &recvBufferSize, &len);
+    getsockopt(sockfd, SOL_SOCKET, SO_RCVBUF, (char *)&recvBufferSize, &len);
     std::cerr<<"UDP Wanted "<<StringHelper::memorySizeReadable(wanted_rcvbuff_size_bytes)<<" Set "<<StringHelper::memorySizeReadable(recvBufferSize)<<"\n";
   }
 }
@@ -85,12 +93,18 @@ void UDPReceiver::receiveFromUDPLoop() {
         return;
     }
     int enable = 1;
-    if (setsockopt(m_socket, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int)) < 0){
+    if (setsockopt(m_socket, SOL_SOCKET, SO_REUSEADDR, (char *)&enable, sizeof(int)) < 0){
         std::cout<<"Error setting reuse\n";
     }
+
+// Not awailable in windows
+#ifndef __windows__
     if(setsockopt(m_socket,SOL_SOCKET,SO_REUSEPORT,&enable,sizeof(int))<0){
         std::cout<<"Error setting SO_REUSEPORT\n";
     }
+#endif
+
+
     if(m_config.opt_os_receive_buff_size){
         increase_socket_recv_buff_size(m_socket,m_config.opt_os_receive_buff_size.value());
     }
@@ -99,11 +113,18 @@ void UDPReceiver::receiveFromUDPLoop() {
     myaddr.sin_family = AF_INET;
     myaddr.sin_port = htons(m_config.udp_port);
     if(m_config.udp_ip_address.has_value()){
+#ifdef __windows__
+        myaddr.sin_addr.s_addr = htonl(INADDR_ANY);
+        //myaddr.sin_addr.s_addr = inet_addr(m_config.udp_ip_address.value().c_str());
+// for Qt6
+//    inet_pton(AF_INET, m_config.udp_ip_address.value().c_str(), (in_addr *) &myaddr.sin_addr.s_addr);
+#elif
         inet_aton(m_config.udp_ip_address.value().c_str(), (in_addr *) &myaddr.sin_addr.s_addr);
+#endif
     }else{
         myaddr.sin_addr.s_addr = htonl(INADDR_ANY);
     }
-    if (bind(m_socket, (struct sockaddr *) &myaddr, sizeof(myaddr)) == -1) {
+    if (bind(m_socket, (struct sockaddr *) &myaddr, sizeof(myaddr)) == SOCKET_ERROR) {
         std::cerr<<"Error binding to "<<m_config.to_string()<<"\n";
         return;
     }
@@ -119,12 +140,25 @@ void UDPReceiver::receiveFromUDPLoop() {
         //But with a bigger buffer we do not loose packets when the receiver thread cannot keep up for a short amount of time
         // MSG_WAITALL does not wait until we have __n data, but a new UDP packet (that can be smaller than __n)
         //NOTE: NONBLOCKING hogs a whole CPU core ! do not use whenever possible !
-		ssize_t tmp;
+
+
+#ifdef __windows__
+        auto tmp = recvfrom(m_socket,(char *)buff->data(),UDP_PACKET_MAX_SIZE, 0,(sockaddr*)&source,&sourceLen);
+#ifdef QT_DEBUG
+        if(tmp < 0) {
+            auto err = WSAGetLastError();
+            qDebug()<<"UDP ERR "<< err;
+        }
+#endif
+
+#else
+        ssize_t tmp;
         if(m_config.enable_nonblocking){
 			tmp = recvfrom(m_socket,buff->data(),UDP_PACKET_MAX_SIZE, MSG_DONTWAIT,(sockaddr*)&source,&sourceLen);
 		}else{
 			tmp = recvfrom(m_socket,buff->data(),UDP_PACKET_MAX_SIZE, MSG_WAITALL,(sockaddr*)&source,&sourceLen);
 		}
+#endif
 		const ssize_t message_length=tmp;
         if (message_length > 0) { //else -1 was returned;timeout/No data received
 			if(m_last_received_packet_ts!=std::chrono::steady_clock::time_point{}){

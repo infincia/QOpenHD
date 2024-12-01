@@ -1,5 +1,4 @@
 #include "texturerenderer.h"
-#include "avcodec_helper.hpp"
 
 #include <cmath>
 #include <qsettings.h>

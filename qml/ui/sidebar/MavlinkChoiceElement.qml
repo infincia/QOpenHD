@@ -44,21 +44,23 @@ BaseJoyEditElement{
         ListElement {value: 200; verbose:"200%"}
     }
     ListModel{
-        id: elements_model_exposure
-        ListElement {value: -3; verbose:"-3"}
-        ListElement {value: -2; verbose:"-2"}
-        ListElement {value: -1; verbose:"-1"}
-        ListElement {value: 0; verbose:"0"}
-        ListElement {value: 1; verbose:"+1%"}
-        ListElement {value: 2; verbose:"+2"}
-        ListElement {value: 3; verbose:"+3"}
+        id: elements_model_saturation
+        ListElement {value: 50; verbose:"50%"}
+        ListElement {value: 75; verbose:"75%"}
+        ListElement {value: 90; verbose:"90%"}
+        ListElement {value: 100; verbose:"100%\n(Default)"}
+        ListElement {value: 110; verbose:"110%"}
+        ListElement {value: 125; verbose:"125%"}
+        ListElement {value: 150; verbose:"150%"}
     }
     ListModel{
-        id: elements_model_metering
-        ListElement {value: "centre"; verbose:"center"}
-        ListElement {value: "spot"; verbose:"spot"}
-        ListElement {value: "matrix"; verbose:"matrix"}
- 
+        id: elements_model_contrast
+        ListElement {value: 50; verbose:"50%"}
+        ListElement {value: 75; verbose:"75%"}
+         ListElement {value: 90; verbose:"90%"}
+        ListElement {value: 100; verbose:"100%\n(Default)"}
+        ListElement {value: 125; verbose:"125%"}
+        ListElement {value: 150; verbose:"150%"}
     }
     ListModel{
         id: elements_model_sharpness
@@ -89,7 +91,7 @@ BaseJoyEditElement{
         id: elements_model_air_recording
         ListElement {value: 0; verbose:"ALWAYS\nOFF"}
         ListElement {value: 1; verbose:"ALWAYS\nON"}
-         ListElement {value: 2; verbose:"AUTO\n(WHEN ARMED)"}
+        ListElement {value: 2; verbose:"AUTO\n(WHEN ARMED)"}
     }
     ListModel{
         id: elements_model_hotspot
@@ -150,10 +152,10 @@ BaseJoyEditElement{
     function get_model(){
         if(m_param_id=="BRIGHTNESS"){
             return elements_model_brightness;
-        }else if(m_param_id=="EXPOSURE"){
-            return elements_model_exposure;
-        }else if(m_param_id=="METERING"){
-            return elements_model_metering;
+        }else if(m_param_id=="SATURATION"){
+            return elements_model_saturation;
+        }else if(m_param_id=="CONTRAST"){
+            return elements_model_contrast;
         }else if(m_param_id=="SHARPNESS"){
             return elements_model_sharpness;
         }else if(m_param_id=="ROTATION"){

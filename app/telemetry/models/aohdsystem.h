@@ -63,6 +63,7 @@ public: // public for QT
     // based on RPI SOC
     L_RO_PROP(int,curr_cpuload_perc,set_curr_cpuload_perc,0)
     L_RO_PROP(int,curr_soc_temp_degree,set_curr_soc_temp_degree,0)
+    L_RO_PROP(int,curr_txc_temp_degree,set_curr_txc_temp_degree,0)
     L_RO_PROP(int,curr_cpu_freq_mhz,set_curr_cpu_freq_mhz,0)
     L_RO_PROP(int,curr_isp_freq_mhz,set_curr_isp_freq_mhz,0)
     L_RO_PROP(int,curr_h264_freq_mhz,set_curr_h264_freq_mhz,0)

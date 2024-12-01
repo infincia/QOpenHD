@@ -8,7 +8,7 @@ import OpenHD 1.0
 
 SOCStatusWidgetGeneric {
     id: groundStatusWidget
-    width: 112
+    width: 150
     height: 24
 
     visible: settings.show_ground_status && settings.show_widgets

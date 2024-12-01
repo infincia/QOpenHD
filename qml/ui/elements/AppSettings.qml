@@ -226,7 +226,7 @@ Settings {
     property double esc_temp_warn: 75
     property double esc_temp_caution: 60
 
-    property bool show_battery_temp: true
+    property bool show_battery_temp: false
     property bool battery_temp_declutter: false
     //samsung 35e has -10 to 60 temp range
     property double battery_temp_warn: 60

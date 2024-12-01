@@ -283,6 +283,7 @@ void AOHDSystem::process_onboard_computer_status(const mavlink_onboard_computer_
 {
     set_curr_cpuload_perc(msg.cpu_cores[0]);
     set_curr_soc_temp_degree(msg.temperature_core[0]);
+    set_curr_txc_temp_degree(msg.temperature_core[1]);
     // temporary, we repurpose this value
     set_curr_cpu_freq_mhz(msg.storage_type[0]);
     set_curr_isp_freq_mhz(msg.storage_type[1]);

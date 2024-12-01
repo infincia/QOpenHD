@@ -76,7 +76,7 @@ android {
     } else {
         message("GStreamer prebuilt directory does not exist")
     }
-} else {
+} windows {
     # GStreamer configuration for non-Android platforms
     GST_ROOT = c:/gstreamer/1.0/x86_64
 
@@ -103,5 +103,9 @@ android {
             $$GST_ROOT/lib/gstreamer-1.0/include \
             $$GST_ROOT/lib/glib-2.0/include
 
-    }
+    }else {
+    message(gst linux)
+    CONFIG += link_pkgconfig
+    PKGCONFIG   += gstreamer-1.0  gstreamer-video-1.0 gstreamer-gl-1.0 gstreamer-app-1.0 #gstreamer1.0-plugins-good
+
 }

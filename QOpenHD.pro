@@ -32,7 +32,6 @@ CONFIG(debug, debug|release) {
 } else:CONFIG(release, debug|release) {
     DEFINES += QT_NO_DEBUG
     CONFIG += installer
-    CONFIG += force_debug_info
     DESTDIR = $${OUT_PWD}/release
     DEFINES += QMLJSDEBUGGER
 }

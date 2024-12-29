@@ -5,7 +5,7 @@ LIBS += -LC:/ffmpeg/lib -lavcodec -lavutil -lavformat
 # TODO dirty
 LIBS += -lGLESv2 -lEGL
 
-WindowsBuild {
+win32 {
     INCLUDEPATH += $$PWD/../../../build-libs-windows/ffmpeg/include
     LIBS += -L$$PWD/../../../build-libs-windows/ffmpeg/lib -lavcodec -lavutil -lavformat
 

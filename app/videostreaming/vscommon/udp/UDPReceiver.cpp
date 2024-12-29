@@ -124,10 +124,16 @@ void UDPReceiver::receiveFromUDPLoop() {
     }else{
         myaddr.sin_addr.s_addr = htonl(INADDR_ANY);
     }
+    #ifdef _WIN32
     if (bind(m_socket, (struct sockaddr *) &myaddr, sizeof(myaddr)) == SOCKET_ERROR) {
         std::cerr<<"Error binding to "<<m_config.to_string()<<"\n";
         return;
     }
+    #elif
+     if (bind(m_socket, (struct sockaddr *) &myaddr, sizeof(myaddr)) == -1) {
+        std::cerr<<"Error binding to "<<m_config.to_string()<<"\n";
+        return;
+    #endif
     //wrap into unique pointer to avoid running out of stack
     const auto buff=std::make_unique<std::array<uint8_t,UDP_PACKET_MAX_SIZE>>();
 

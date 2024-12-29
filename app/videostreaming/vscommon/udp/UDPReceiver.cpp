@@ -3,7 +3,7 @@
 #include "common/StringHelper.hpp"
 #include "common/SchedulingHelper.hpp"
 
-#if defined(__windows__)
+#if defined(_WIN32)
 #include <winsock2.h>
 #define SHUT_RD SD_RECEIVE
 #else
@@ -98,7 +98,7 @@ void UDPReceiver::receiveFromUDPLoop() {
     }
 
 // Not awailable in windows
-#ifndef __windows__
+#ifndef _WIN32
     if(setsockopt(m_socket,SOL_SOCKET,SO_REUSEPORT,&enable,sizeof(int))<0){
         std::cout<<"Error setting SO_REUSEPORT\n";
     }
@@ -113,7 +113,7 @@ void UDPReceiver::receiveFromUDPLoop() {
     myaddr.sin_family = AF_INET;
     myaddr.sin_port = htons(m_config.udp_port);
     if(m_config.udp_ip_address.has_value()){
-#ifdef __windows__
+#ifdef _WIN32
         myaddr.sin_addr.s_addr = htonl(INADDR_ANY);
         //myaddr.sin_addr.s_addr = inet_addr(m_config.udp_ip_address.value().c_str());
 // for Qt6
@@ -142,7 +142,7 @@ void UDPReceiver::receiveFromUDPLoop() {
         //NOTE: NONBLOCKING hogs a whole CPU core ! do not use whenever possible !
 
 
-#ifdef __windows__
+#ifdef _WIN32
         auto tmp = recvfrom(m_socket,(char *)buff->data(),UDP_PACKET_MAX_SIZE, 0,(sockaddr*)&source,&sourceLen);
 #ifdef QT_DEBUG
         if(tmp < 0) {

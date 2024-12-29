@@ -5,7 +5,12 @@
 #include "gl_videorenderer.h"
 #include "../color_helper.h"
 #include <GL/gl.h>
+#include <EGL/eglext.h>
+#include <GLES2/gl2ext.h>
 #include <chrono>
+#include "../avcodec_helper.hpp"
+#include <libavutil/error.h>
+#include <vector>
 
 static EGLint texgen_attrs[] = {
 	EGL_DMA_BUF_PLANE0_FD_EXT,
@@ -34,9 +39,10 @@ static void create_rgba_texture(GLuint& tex_id,uint32_t color_rgba){
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   const int width=1280;
   const int height=720;
-  uint8_t pixels[4*width*height];
-  fillFrame(pixels,width,height,width*4, color_rgba);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+  std::vector<uint8_t> pixels(4*width*height);
+
+  fillFrame(pixels.data(), width, height, width*4, color_rgba);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels.data());
   glBindTexture(GL_TEXTURE_2D,0);
 }
 

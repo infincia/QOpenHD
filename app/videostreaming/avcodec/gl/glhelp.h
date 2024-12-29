@@ -1,6 +1,7 @@
 #ifndef GLHELP_H
 #define GLHELP_H
 
+extern "C" {
 #include <EGL/egl.h>
 #include <EGL/eglext.h>
 // Crude hack for QT on the rpi. Fucking hell, how annyoing this QT crap with redefining opengl is !
@@ -11,12 +12,14 @@
 
 //#include <GLES3/gl32.h>
 //#include <GLES3/gl3ext.h>
-
+}
 #include <cassert>
 
 /// Some gl extensions that don't seem to be part of raspberry gl. 
 /// I think you could get these from other places like GLAD or libepoxy.
 ///
+
+#ifndef __windows__
 EGLImageKHR eglCreateImageKHR(EGLDisplay dpy, EGLContext ctx, EGLenum target, EGLClientBuffer buffer, const EGLint *attrib_list) __attribute__((weak)); // May not be in libEGL symbol table, resolve manually :(
 EGLImageKHR eglCreateImageKHR(EGLDisplay dpy, EGLContext ctx, EGLenum target, EGLClientBuffer buffer, const EGLint *attrib_list)
 {
@@ -61,6 +64,8 @@ void glEGLImageTargetTexture2DOES(GLenum target, GLeglImageOES image)
 	}
 	imageTargetTexture2DOES(target, image);
 }
+
+#endif
 /// END Gl Extensions --------------------------------------------------
 
 

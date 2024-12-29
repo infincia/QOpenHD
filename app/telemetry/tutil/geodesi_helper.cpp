@@ -3,7 +3,7 @@
 #include <QtGlobal>
 
 extern "C" {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0) || defined(Q_OS_WIN)
 #include "lib/geographiclib-c-2.0/src/geodesic.h"
 #else
 #include "geodesic.h"

@@ -32,7 +32,6 @@ CONFIG(debug, debug|release) {
 } else:CONFIG(release, debug|release) {
     DEFINES += QT_NO_DEBUG
     CONFIG += installer
-    CONFIG += force_debug_info
     DESTDIR = $${OUT_PWD}/release
     DEFINES += QMLJSDEBUGGER
 }
@@ -103,6 +102,12 @@ LinuxBuild {
     include(app/videostreaming/gstreamer/gst_video.pri)
 }
 
+# gst Qt plugins in windows is hard
+WindowsBuild {
+    # In future is better to use windows decoding and rendering api
+    include(app/videostreaming/avcodec/avcodec_video.pri)
+}
+
 # All Generic files / files that literally have 0!! dependencies other than qt
 SOURCES += \
     app/adsb/adsbvehicle.cpp \
@@ -125,6 +130,7 @@ HEADERS += \
     app/common/util_fs.h \
     app/common/StringHelper.hpp \
     app/common/TimeHelper.hpp \
+    app/common/SchedulingHelper.hpp \
     app/logging/hudlogmessagesmodel.h \
     app/logging/loghelper.h \
     app/logging/logmessagesmodel.h \

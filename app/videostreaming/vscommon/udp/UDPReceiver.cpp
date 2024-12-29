@@ -129,7 +129,7 @@ void UDPReceiver::receiveFromUDPLoop() {
         std::cerr<<"Error binding to "<<m_config.to_string()<<"\n";
         return;
     }
-    #elif
+    #else
      if (bind(m_socket, (struct sockaddr *) &myaddr, sizeof(myaddr)) == -1) {
         std::cerr<<"Error binding to "<<m_config.to_string()<<"\n";
         return;

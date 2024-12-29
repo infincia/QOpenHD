@@ -30,6 +30,7 @@ win32 {
 
 # Unix (Linux/Android) Configuration
 unix {
+    #include(../../lib/h264/h264.pri)
     LIBS += -lGLESv2 -lEGL
 
     # Optional: Include Linux-specific paths or libraries

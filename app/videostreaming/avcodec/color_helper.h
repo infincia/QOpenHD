@@ -9,14 +9,20 @@
 #include <cstdint>
 
 static uint32_t create_pixel_rgba(uint8_t r,uint8_t g,uint8_t b,uint8_t a){
-  uint8_t rgba[4];
-  rgba[0]=r;
-  rgba[1]=g;
-  rgba[2]=b;
-  rgba[3]=a;
-  uint32_t ret;
-  memcpy(&ret,rgba,4);
-  return ret;
+#ifdef __windows__
+    return ((uint32_t)a << 24) | ((uint32_t)b << 16) | ((uint32_t)g << 8) | (uint32_t)r;
+#else
+    uint8_t rgba[4];
+    rgba[0]=r;
+    rgba[1]=g;
+    rgba[2]=b;
+    rgba[3]=a;
+    uint32_t ret;
+    memcpy(&ret,rgba,4);
+    return ret;
+#endif
+
+
 }
 
 // --------------------------------------------------- from drm-howto ---------------------------------------------------

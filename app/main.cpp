@@ -235,6 +235,10 @@ static void android_check_permissions(){
 
 int main(int argc, char *argv[]) {
 
+#if defined(__windows__)
+    QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
+#endif
+
     QCoreApplication::setOrganizationName("OpenHD");
     QCoreApplication::setOrganizationDomain("openhd");
     QCoreApplication::setApplicationName("QOpenHD");

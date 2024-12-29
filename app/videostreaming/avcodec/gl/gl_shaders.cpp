@@ -111,9 +111,9 @@ static const GLchar* fragment_shader_source_NV12 =
 	"		texture2D(s_texture_uv,v_texCoord).xy\n"
 	"	);"
 	"	mat3 colorMatrix = mat3(\n"
-	"		1.1644f, 1.1644f, 1.1644f,\n"
-	"        0.0f, -0.3917f, 2.0172f,\n"
-	"        1.5960f, -0.8129f, 0.0f"
+    "		1.1644, 1.1644, 1.1644,\n"
+    "        0.0, -0.3917, 2.0172,\n"
+    "        1.5960, -0.8129, 0.0"
 	"		);\n"
     "	gl_FragColor = vec4(clamp(YCbCr*colorMatrix,0.0,1.0), 1.0);\n"
 	"}\n";

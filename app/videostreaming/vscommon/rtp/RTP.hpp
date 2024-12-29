@@ -5,13 +5,21 @@
 #ifndef LIVEVIDEO10MS_RTP_HPP
 #define LIVEVIDEO10MS_RTP_HPP
 
+#if defined(__windows__)
+#include <winsock2.h>
+#else
 #include <arpa/inet.h>
+#endif
+
 #include <assert.h>
 #include <sstream>
+#include <stdint.h>
 
 // This code is written for little endian (aka ARM,x86) byte order
 #if defined(__macos__)
 static_assert(__BYTE_ORDER__==LITTLE_ENDIAN);
+#elif defined(__windows__)
+static_assert(__BYTE_ORDER__==__ORDER_LITTLE_ENDIAN__);
 #else
 static_assert(__BYTE_ORDER__==__LITTLE_ENDIAN);
 #endif
@@ -116,7 +124,7 @@ struct nal_unit_header_h265_t{
     uint8_t type:   6; //1st byte
     uint8_t layerId:6; //2nd byte
     uint8_t tid:    3; //2nd byte
-}__attribute__ ((packed));
+}__attribute__ ((packed)) __attribute__ ((gcc_struct));
 static_assert(sizeof(nal_unit_header_h265_t)==2);
 // defined in 4.4.3 FU Header
 //+---------------+

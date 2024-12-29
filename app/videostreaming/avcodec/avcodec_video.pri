@@ -1,23 +1,5 @@
+# Common Include Paths and Sources
 INCLUDEPATH += $$PWD
-
-# TODO dirty
-WindowsBuild {
-    INCLUDEPATH += $$PWD/../../../build-libs-windows/ffmpeg/include
-    LIBS += -L$$PWD/../../../build-libs-windows/ffmpeg/lib -lavcodec -lavutil -lavformat
-
-    INCLUDEPATH += $$PWD/../../../build-libs-windows/angle-x64/include
-    LIBS += -L$$PWD/../../../build-libs-windows/angle-x64/bin -lGLESv2 -lEGL
-
-    DEFINES += EGL_EGLEXT_PROTOTYPES
-    DEFINES += GL_GLEXT_PROTOTYPES
-#    LIBS += -lOpengl32
-}
-else {
-    LIBS += -lGLESv2 -lEGL
-}
-
-# just using the something something webrtc from stephen was the easiest solution.
-#include(../../lib/h264/h264.pri)
 
 SOURCES += \
     $$PWD/QSGVideoTextureItem.cpp \
@@ -34,22 +16,50 @@ HEADERS += \
     $$PWD/avcodec_decoder.h \
     $$PWD/avcodec_helper.hpp
 
-# experimental
-#INCLUDEPATH += /usr/local/include/uvgrtp
-#LIBS += -L/usr/local/lib -luvgrtp
+# Windows-Specific Configuration
+win32 {
+    INCLUDEPATH += $$PWD/../../../build-libs-windows/ffmpeg/include
+    LIBS += -L$$PWD/../../../build-libs-windows/ffmpeg/lib -lavcodec -lavutil -lavformat
 
-# dirty way to check if we are on rpi and therefore should use the external decode service
-CONFIG += link_pkgconfig
-packagesExist(mmal) {
-   DEFINES += IS_PLATFORM_RPI
+    INCLUDEPATH += $$PWD/../../../build-libs-windows/angle-x64/include
+    LIBS += -L$$PWD/../../../build-libs-windows/angle-x64/bin -lGLESv2 -lEGL
+
+    DEFINES += EGL_EGLEXT_PROTOTYPES
+    DEFINES += GL_GLEXT_PROTOTYPES
 }
 
-exists(/usr/local/share/openhd/platform/rock/) {
-    message(This is a Rock)
-    DEFINES += IS_PLATFORM_ROCK
-} else {
-    message(This is not a Rock)
+# Unix (Linux/Android) Configuration
+unix {
+    LIBS += -lGLESv2 -lEGL
+
+    # Optional: Include Linux-specific paths or libraries
+    exists(/usr/local/include/uvgrtp) {
+        INCLUDEPATH += /usr/local/include/uvgrtp
+        LIBS += -L/usr/local/lib -luvgrtp
+    }
+
+    # Platform Detection for Raspberry Pi or Rock
+    packagesExist(mmal) {
+        DEFINES += IS_PLATFORM_RPI
+    }
+    exists(/usr/local/share/openhd/platform/rock/) {
+        message(This is a Rock)
+        DEFINES += IS_PLATFORM_ROCK
+    } else {
+        message(This is not a Rock)
+    }
 }
 
-# can be used in c++, also set to be exposed in qml
+# macOS-Specific Configuration (if needed)
+macx {
+    # Add macOS-specific libraries or configurations here
+}
+
+# Shared Definitions
 DEFINES += QOPENHD_ENABLE_VIDEO_VIA_AVCODEC
+
+# Debugging Build Information
+message(Building for platform $$QMAKE_PLATFORM)
+win32: message(Windows build activated.)
+unix: message(Unix build activated.)
+macx: message(macOS build activated.)

@@ -52,61 +52,89 @@ Rectangle {
                 columnSpacing: 10
 
                 Button {
+                    width: 400
                     text: "Restart local OHD service"
                     onClicked: {
                         _qopenhd.restart_local_oenhd_service()
                     }
                 }
                 Button {
+                    id: local_ip_button
                     text: "Show local IP"
                     onClicked: {
-                        console.log("Local IP: 192.168.1.1")
+                        var text = _qopenhd.show_local_ip()
+                        local_ip_button.text = text
                     }
                 }
                 Button {
+                    id: write_local_log
                     text: "Write GND log to SD"
                     onClicked: {
-                        console.log("GND log written")
+                        var text = _qopenhd.write_local_log()
+                        write_local_log.text = text
                     }
                 }
                 Button {
+                    id: write_air_log
                     text: "Write AIR log to SD"
                     onClicked: {
-                        console.log("AIR log written")
+                        var text = "Not implemented yet"
+                        write_air_log.text = text
                     }
                 }
                 Button {
                     text: "Set Tele rates"
                     onClicked: {
-                        console.log("Telemetry rates updated")
+                        _mavlinkTelemetry.re_apply_rates()
                     }
                 }
                 Button {
+                    visible: _qopenhd.is_linux()
                     text: "Start openhd"
-                    visible: _qopenhd.is_linux()
                     onClicked: {
-                        console.log("OpenHD started")
+                        _qopenhd.sysctl_openhd(0);
                     }
                 }
                 Button {
+                    visible: _qopenhd.is_linux()
                     text: "Stop openhd"
-                    visible: _qopenhd.is_linux()
                     onClicked: {
-                        console.log("OpenHD stopped")
+                        _qopenhd.sysctl_openhd(1);
                     }
                 }
                 Button {
+                    visible: _qopenhd.is_linux()
                     text: "Enable openhd"
-                    visible: _qopenhd.is_linux()
                     onClicked: {
-                        console.log("OpenHD enabled")
+                        _qopenhd.sysctl_openhd(2);
                     }
                 }
                 Button {
-                    text: "Disable openhd"
                     visible: _qopenhd.is_linux()
+                    text: "Disable openhd"
                     onClicked: {
-                        console.log("OpenHD disabled")
+                        _qopenhd.sysctl_openhd(3);
+                    }
+                }
+                Button {
+                    id:sdbut
+                    text: "Self Distruct"
+                    onClicked: {
+                        sdbut.text="just kidding";
+                    }
+                }
+                Button {
+                    font.capitalization: Font.MixedCase
+                    text: qsTr("Restart QOpenHD")
+                    onPressed: {
+                        qopenhdservicedialoque.open_dialoque(0)
+                    }
+                }
+                Button {
+                    font.capitalization: Font.MixedCase
+                    text: qsTr("Cancel QOpenHD")
+                    onPressed: {
+                        qopenhdservicedialoque.open_dialoque(1)
                     }
                 }
             }

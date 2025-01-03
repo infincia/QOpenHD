@@ -79,7 +79,7 @@ Rectangle{
 
 
     Keys.onPressed: (event)=> {
-                        console.log("ChoiceSelector key was pressed:"+event);
+                        // console.log("ChoiceSelector key was pressed:"+event);
                         if(event.key == Qt.Key_Left){
                             // Either close immediately or go back to the initial choice (don't save)
                             if(m_current_user_selected_index==m_initial_index){

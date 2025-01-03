@@ -223,24 +223,29 @@ bool XParam::handle_param_ext_ack(const mavlink_param_ext_ack_t &ack,int sender_
 
 bool XParam::handle_param_ext_value(const mavlink_param_ext_value_t &response, int sender_sysid, int sender_compid)
 {
-    //qDebug()<<"Got mavlink_param_ext_value_t";
-    auto opt_finished=find_remove_running_command_get_all_threadsafe(response,sender_sysid,sender_compid);
-    if(opt_finished.has_value()){
-        //qDebug()<<"Finished get_all command";
-        auto finished=opt_finished.value();
-        //qDebug()<<"Got "<<finished.server_param_set.size()<<" params";
+    qDebug() << "Incoming PARAM_EXT_VALUE:";
+    qDebug() << "  Param ID:" << get_param_id(response.param_id).c_str();
+    qDebug() << "  Param Value:" << get_param_value_string(response.param_value).c_str();
+    qDebug() << "  Param Type:" << response.param_type;
+    qDebug() << "  Target SysID:" << sender_sysid;
+    qDebug() << "  Target CompID:" << sender_compid;
+    qDebug() << "  Param Count:" << response.param_count;
+    qDebug() << "  Param Index:" << response.param_index;
+
+    auto opt_finished = find_remove_running_command_get_all_threadsafe(response, sender_sysid, sender_compid);
+    if (opt_finished.has_value()) {
+        auto finished = opt_finished.value();
         std::vector<mavlink_param_ext_value_t> valid_param_set;
-        for(auto& param:finished.server_param_set){
+        for (auto &param : finished.server_param_set) {
             assert(param.has_value());
             valid_param_set.push_back(param.value());
         }
-        GetAllParamResult result{true,valid_param_set};
+        GetAllParamResult result{true, valid_param_set};
         finished.cb(result);
         return true;
     }
     return true;
 }
-
 
 std::optional<XParam::RunningParamCmdSet> XParam::find_remove_running_command_threadsafe(const mavlink_param_ext_ack_t &ack,int sender_sysid,int sender_compid)
 {
@@ -348,12 +353,22 @@ void XParam::send_next_message_running_get_all(RunningParamCmdGetAll& running_cm
     running_cmd.n_transmissions++;
 }
 
-void XParam::send_param_ext_set(const mavlink_param_ext_set_t &cmd)
-{
-    const auto self_sysid=QOpenHDMavlinkHelper::get_own_sys_id();
-    const auto self_compid=QOpenHDMavlinkHelper::get_own_comp_id();
+void XParam::send_param_ext_set(const mavlink_param_ext_set_t &cmd) {
+    const auto self_sysid = QOpenHDMavlinkHelper::get_own_sys_id();
+    const auto self_compid = QOpenHDMavlinkHelper::get_own_comp_id();
     mavlink_message_t msg{};
-    mavlink_msg_param_ext_set_encode(self_sysid,self_compid,&msg,&cmd);
+    mavlink_msg_param_ext_set_encode(self_sysid, self_compid, &msg, &cmd);
+
+    // Display the MAVLink message details directly in this function
+    qDebug() << "MAVLink Message:";
+    qDebug() << "  Msg ID:" << msg.msgid;
+    qDebug() << "  System ID:" << msg.sysid;
+    qDebug() << "  Component ID:" << msg.compid;
+    qDebug() << "  Command: PARAM_EXT_SET";
+    qDebug() << "    Param ID:" << cmd.param_id;
+    qDebug() << "    Param Value:" << cmd.param_value;
+    qDebug() << "    Param Type:" << cmd.param_type;
+
     MavlinkTelemetry::instance().sendMessage(msg);
 }
 

@@ -55,7 +55,7 @@ Item{
     signal goto_next();
 
     Keys.onPressed: (event)=> {
-                        console.log("BaseJoyElement"+m_title+" key was pressed:"+event);
+                        // console.log("BaseJoyElement"+m_title+" key was pressed:"+event);
                         if(event.key == Qt.Key_Left){
                            if(m_button_left_activated){
                                 choice_left()

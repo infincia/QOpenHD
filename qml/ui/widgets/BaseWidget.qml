@@ -137,7 +137,7 @@ BaseWidgetForm {
 
     // react to the user opening the (currently focused) widget
     Keys.onPressed: (event)=> {
-        console.log("BaseWidget "+widgetIdentifier+" Key was pressed:"+event);
+        // console.log("BaseWidget "+widgetIdentifier+" Key was pressed:"+event);
         if (event.key == Qt.Key_Return) {
             console.log("enter was pressed");
             event.accepted = true;

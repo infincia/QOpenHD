@@ -53,6 +53,42 @@ static std::vector<std::shared_ptr<XParam>> get_parameters_list(){
                "don't support changing the bitrate / are bad at targeting a given bitrate, you have to adjust your link according to your camera needs."
                );
     {
+    auto default_values=std::vector<ImprovedIntSetting::Item>{
+                                                                {"AUTO (Default)", 0},
+                                                                {"10 (Very High Quality)", 10},
+                                                                {"12 (High Quality)", 12},
+                                                                {"15 (Good Quality)", 15},
+                                                                {"18 (Standard Quality)", 18},
+                                                                {"20 (Moderate Compression)", 20},
+                                                                {"25 (Balanced Quality & Compression)", 25},
+                                                                {"30 (Moderate Compression)", 30},
+                                                                {"40 (Low Quality)", 40},
+                                                                {"51 (Very Low Quality)", 51}
+                                                                };
+    append_int(ret,openhd::WB_QP_MAX,
+               ImprovedIntSetting(0,51,default_values),
+               "QP_MIN for Rockchip"
+               );
+    }
+    {
+    auto default_values=std::vector<ImprovedIntSetting::Item>{
+                                                                {"AUTO (Default)", 0},
+                                                                {"10 (Very High Quality)", 10},
+                                                                {"12 (High Quality)", 12},
+                                                                {"15 (Good Quality)", 15},
+                                                                {"18 (Standard Quality)", 18},
+                                                                {"20 (Moderate Compression)", 20},
+                                                                {"25 (Balanced Quality & Compression)", 25},
+                                                                {"30 (Moderate Compression)", 30},
+                                                                {"40 (Low Quality)", 40},
+                                                                {"51 (Very Low Quality)", 51}
+                                                                };
+    append_int(ret,openhd::WB_QP_MIN,
+               ImprovedIntSetting(0,51,default_values),
+               "QP_MIN for Rockchip"
+               );
+    }
+    {
         std::vector<std::string> values{};
         values.push_back("Disable");
         values.push_back("+1 (2 antennas)");
@@ -756,6 +792,9 @@ static std::map<std::string, void *> get_whitelisted_params()
     ret["WB_V_FEC_PERC"]=nullptr;
     ret["WB_V_RATE_PERC"]=nullptr;
     ret["VARIABLE_BITRATE"]=nullptr;
+    ret["QP_MIN"]=nullptr;
+    ret["QP_MAX"]=nullptr;
+
     //
     ret["TYPE_CAM0"]=nullptr;
     ret["TYPE_CAM1"]=nullptr;

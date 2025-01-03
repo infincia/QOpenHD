@@ -36,7 +36,7 @@ Item{
     }
 
     Keys.onPressed: (event)=> {
-                        console.log("Go back element key was pressed:"+event);
+                        // console.log("Go back element key was pressed:"+event);
                         if(event.key == Qt.Key_Left || event.key == Qt.Key_Right || event.key == Qt.Key_Return){
                            close_and_go_back()
                         }

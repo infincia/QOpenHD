@@ -140,7 +140,7 @@ Rectangle {
         clip: true
 
         Keys.onPressed: (event)=> {
-                console.log("Sidebar Key was pressed:"+event);
+                // console.log("Sidebar Key was pressed:"+event);
                 var tmp_index=mainStackLayout.currentIndex;
                 if(event.key==Qt.Key_Up){
                     tmp_index--;

@@ -46,7 +46,7 @@ BaseJoyEditElement2{
     }
 
     Keys.onPressed: (event)=> {
-                        console.log("BaseJoyElement"+m_title+" key was pressed:"+event);
+                        // console.log("BaseJoyElement"+m_title+" key was pressed:"+event);
                         if(event.key == Qt.Key_Left){
                             sidebar.regain_control_on_sidebar_stack();
                             event.accepted=true;

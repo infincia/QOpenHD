@@ -59,7 +59,7 @@ Item {
     }
 
     Keys.onPressed: (event)=> {
-                        console.log("SidebarStackButton"+override_tag+" key was pressed:"+event);
+                        // console.log("SidebarStackButton"+override_tag+" key was pressed:"+event);
                         if(event.key === Qt.Key_Up){
                             m_stack_index--;
                             if(m_stack_index<-1){

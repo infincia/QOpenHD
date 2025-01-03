@@ -791,7 +791,7 @@ static std::map<std::string, void *> get_whitelisted_params()
     //
     ret["WB_V_FEC_PERC"]=nullptr;
     ret["WB_V_RATE_PERC"]=nullptr;
-    ret["VARIABLE_BITRATE"]=nullptr;
+    ret["VARIcABLE_BITRATE"]=nullptr;
     ret["QP_MIN"]=nullptr;
     ret["QP_MAX"]=nullptr;
 

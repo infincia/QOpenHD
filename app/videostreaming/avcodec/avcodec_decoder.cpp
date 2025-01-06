@@ -510,7 +510,7 @@ int AVCodecDecoder::open_and_decode_until_error(const QOpenHDVideoHelper::VideoS
     }
 
     #ifdef _WIN32
-        const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_DXVA2;
+        const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_D3D11VA;
     #else
         const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_DRM;
     #endif
@@ -518,7 +518,6 @@ int AVCodecDecoder::open_and_decode_until_error(const QOpenHDVideoHelper::VideoS
     //const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_D3D11VA;
     //const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_DXVA2;
     //const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_DRM;
-    //const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_D3D11VA;
     //const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_VAAPI;
     //const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_CUDA;
     //const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_VDPAU;

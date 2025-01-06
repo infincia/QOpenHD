@@ -1,4 +1,3 @@
-#include "avcodec_decoder.h"
 #include "qdebug.h"
 #include <QFileInfo>
 #include <iostream>
@@ -16,15 +15,16 @@
 
 #include "ExternalDecodeService.hpp"
 
-static int hw_decoder_init(AVCodecContext *ctx, const enum AVHWDeviceType type){
+static int hw_decoder_init(AVCodecContext *ctx, const enum AVHWDeviceType type) {
     int err = 0;
     ctx->hw_frames_ctx = NULL;
-    // ctx->hw_device_ctx gets freed when we call avcodec_free_context
-    if ((err = av_hwdevice_ctx_create(&ctx->hw_device_ctx, type,
-                                      NULL, NULL, 0)) < 0) {
-        fprintf(stderr, "Failed to create specified HW device.\n");
+    if ((err = av_hwdevice_ctx_create(&ctx->hw_device_ctx, type, NULL, NULL, 0)) < 0) {
+        char errbuf[128];
+        av_strerror(err, errbuf, sizeof(errbuf));
+        fprintf(stderr, "Failed to create HW device (%s): %s\n", av_hwdevice_get_type_name(type), errbuf);
         return err;
     }
+    qDebug() << "HW device created: " << av_hwdevice_get_type_name(type);
     return err;
 }
 
@@ -508,7 +508,10 @@ int AVCodecDecoder::open_and_decode_until_error(const QOpenHDVideoHelper::VideoS
       return 0;
     }
 
-    const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_DRM;
+    //const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_D3D11VA;
+    const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_DXVA2;
+    //const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_DRM;
+    //const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_D3D11VA;
     //const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_VAAPI;
     //const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_CUDA;
     //const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_VDPAU;

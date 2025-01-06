@@ -1,3 +1,4 @@
+#include "avcodec_decoder.h"
 #include "qdebug.h"
 #include <QFileInfo>
 #include <iostream>

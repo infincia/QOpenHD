@@ -199,20 +199,26 @@ static VideoStreamConfig read_config_from_settings(){
     return ret;
 }
 
-
-
 // For OpenHD images, these files are copied over by the image builder and therefore can
 // be used for testing / validation
-static std::string get_default_openhd_test_file(const VideoCodec video_codec){
+static std::string get_default_openhd_test_file(const VideoCodec video_codec) {
     std::stringstream in_filename;
-    in_filename<<"/usr/local/share/testvideos/";
-    if(video_codec==QOpenHDVideoHelper::VideoCodecH264){
-        in_filename<<"rpi_1080.h264";
-    }else if(video_codec==QOpenHDVideoHelper::VideoCodecH265){
-        in_filename<<"jetson_test.h265";
-    }else{
-       in_filename<<"uv_640x480.mjpeg";
+#ifdef _WIN32
+    // Use Windows path
+    in_filename << "C:\\\\testvideos\\\\";
+#else
+    // Use Linux path
+    in_filename << "/usr/local/share/testvideos/";
+#endif
+
+    if (video_codec == QOpenHDVideoHelper::VideoCodecH264) {
+        in_filename << "rpi_1080.h264";
+    } else if (video_codec == QOpenHDVideoHelper::VideoCodecH265) {
+        in_filename << "jetson_test.h265";
+    } else {
+        in_filename << "uv_640x480.mjpeg";
     }
+
     return in_filename.str();
 }
 

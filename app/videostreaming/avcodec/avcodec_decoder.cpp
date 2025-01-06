@@ -524,7 +524,6 @@ int AVCodecDecoder::open_and_decode_until_error(const QOpenHDVideoHelper::VideoS
 
     bool is_mjpeg=false;
     if (decoder->id == AV_CODEC_ID_H264) {
-        qDebug()<<"H264 decode";
         qDebug()<<all_hw_configs_for_this_codec(decoder).c_str();
         if(!stream_config.enable_software_video_decoder){
             // weird workaround needed for pi + DRM_PRIME
@@ -728,7 +727,8 @@ void AVCodecDecoder::open_and_decode_until_error_custom_rtp(const QOpenHDVideoHe
                  wanted_hw_pix_fmt = AV_PIX_FMT_MMAL;
                  use_pi_hw_decode=true;
              }else{
-                 wanted_hw_pix_fmt = AV_PIX_FMT_YUV420P;
+                 qDebug()<<"Starting HW decode";
+                 wanted_hw_pix_fmt = AV_PIX_FMT_D3D11;
              }
          }else{
              wanted_hw_pix_fmt = AV_PIX_FMT_YUV420P;

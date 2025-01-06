@@ -11,6 +11,7 @@
 #include "../avcodec_helper.hpp"
 #include <libavutil/error.h>
 #include <vector>
+#include <cmath> // For dithering calculations
 
 static EGLint texgen_attrs[] = {
 	EGL_DMA_BUF_PLANE0_FD_EXT,
@@ -357,18 +358,68 @@ static std::string safe_glGetString(GLenum name){
   return std::string((const char*)tmp); // NOLINT(modernize-return-braced-init-list)
 }
 std::string GL_VideoRenderer::debug_info() {
-  const auto gl_vendor= safe_glGetString(GL_VENDOR);
-  const auto gl_renderer= safe_glGetString(GL_RENDERER);
-  const auto gl_version= safe_glGetString(GL_VERSION);
-  const auto gl_shading_language_version= safe_glGetString(GL_SHADING_LANGUAGE_VERSION);
-  std::stringstream ss;
-  ss<<"GL_VENDOR    : "<< gl_vendor<<"\n";
-  ss<<"GL_RENDERER  : "<< gl_renderer<<"\n";
-  ss<<"GL_VERSION  : "<< gl_version<<"\n";
-  ss<<"GL_SHADING_LANGUAGE_VERSION : "<< gl_shading_language_version<<"\n";
-  return ss.str();
-}
+    const auto gl_vendor = safe_glGetString(GL_VENDOR);
+    const auto gl_renderer = safe_glGetString(GL_RENDERER);
+    const auto gl_version = safe_glGetString(GL_VERSION);
+    const auto gl_shading_language_version = safe_glGetString(GL_SHADING_LANGUAGE_VERSION);
+    std::stringstream ss;
 
+    // Basic OpenGL Information
+    ss << "GL_VENDOR    : " << gl_vendor << "\n";
+    ss << "GL_RENDERER  : " << gl_renderer << "\n";
+    ss << "GL_VERSION   : " << gl_version << "\n";
+    ss << "GL_SHADING_LANGUAGE_VERSION : " << gl_shading_language_version << "\n";
+
+    // Maximum texture size
+    GLint maxTextureSize = 0;
+    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize);
+    ss << "GL_MAX_TEXTURE_SIZE : " << maxTextureSize << "\n";
+
+    // Maximum texture units
+    GLint maxTextureUnits = 0;
+    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxTextureUnits);
+    ss << "GL_MAX_TEXTURE_IMAGE_UNITS : " << maxTextureUnits << "\n";
+
+    // Extensions
+    std::string extensions = (const char*)glGetString(GL_EXTENSIONS);
+    ss << "Supported Extensions:\n" << extensions << "\n";
+
+    if (extensions.find("GL_OES_texture_float") != std::string::npos) {
+        ss << "Supports GL_OES_texture_float\n";
+    } else {
+        ss << "Does not support GL_OES_texture_float\n";
+    }
+
+    if (extensions.find("GL_OES_texture_half_float") != std::string::npos) {
+        ss << "Supports GL_OES_texture_half_float\n";
+    } else {
+        ss << "Does not support GL_OES_texture_half_float\n";
+    }
+
+    if (extensions.find("GL_EXT_color_buffer_half_float") != std::string::npos) {
+        ss << "Supports GL_EXT_color_buffer_half_float\n";
+    } else {
+        ss << "Does not support GL_EXT_color_buffer_half_float\n";
+    }
+
+    // Shader precision
+    GLint precisionRange[2];
+    GLint precisionBits;
+
+    glGetShaderPrecisionFormat(GL_FRAGMENT_SHADER, GL_HIGH_FLOAT, precisionRange, &precisionBits);
+    ss << "Fragment Shader High Float Precision: Range [" << precisionRange[0] << ", " << precisionRange[1]
+       << "], Bits: " << precisionBits << "\n";
+
+    glGetShaderPrecisionFormat(GL_FRAGMENT_SHADER, GL_MEDIUM_FLOAT, precisionRange, &precisionBits);
+    ss << "Fragment Shader Medium Float Precision: Range [" << precisionRange[0] << ", " << precisionRange[1]
+       << "], Bits: " << precisionBits << "\n";
+
+    glGetShaderPrecisionFormat(GL_FRAGMENT_SHADER, GL_LOW_FLOAT, precisionRange, &precisionBits);
+    ss << "Fragment Shader Low Float Precision: Range [" << precisionRange[0] << ", " << precisionRange[1]
+       << "], Bits: " << precisionBits << "\n";
+
+    return ss.str();
+}
 
 std::vector<int> GL_VideoRenderer::supported_av_hw_formats()
 {

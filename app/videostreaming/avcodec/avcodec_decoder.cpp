@@ -354,11 +354,11 @@ void AVCodecDecoder::on_new_frame(AVFrame *frame)
         std::stringstream ss;
         ss<<safe_av_get_pix_fmt_name((AVPixelFormat)frame->format)<<" "<<frame->width<<"x"<<frame->height;
         DecodingStatistcs::instance().set_primary_stream_frame_format(QString(ss.str().c_str()));
-        //qDebug()<<"Got frame:"<<ss.str().c_str();
+        // qDebug()<<"Got frame:"<<ss.str().c_str();
     }
     // Once we got the first frame, reduce the log level
     av_log_set_level(AV_LOG_WARNING);
-    //qDebug()<<debug_frame(frame).c_str();
+    // qDebug()<<debug_frame(frame).c_str();
     TextureRenderer::instance().queue_new_frame_for_display(frame);
     if(last_frame_width==-1 || last_frame_height==-1){
         last_frame_width=frame->width;
@@ -728,7 +728,7 @@ void AVCodecDecoder::open_and_decode_until_error_custom_rtp(const QOpenHDVideoHe
                  use_pi_hw_decode=true;
              }else{
                  qDebug()<<"Starting HW decode";
-                 wanted_hw_pix_fmt = AV_PIX_FMT_D3D11;
+                 wanted_hw_pix_fmt = AV_PIX_FMT_DXVA2_VLD;
              }
          }else{
              wanted_hw_pix_fmt = AV_PIX_FMT_YUV420P;

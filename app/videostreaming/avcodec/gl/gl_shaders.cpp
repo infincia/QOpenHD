@@ -77,43 +77,28 @@ static const GLchar* fragment_shader_source_RGB =
 // Copy paste constants from SDL
 static const GLchar* fragment_shader_source_YUV420P =
     "#version 100\n"
-    "precision mediump float;\n"
-    "uniform sampler2D s_texture_y;\n"
-    "uniform sampler2D s_texture_u;\n"
-    "uniform sampler2D s_texture_v;\n"
-    "varying vec2 v_texCoord;\n"
-
-    "float random(vec2 uv) {\n"
-    "    return fract(sin(dot(uv.xy, vec2(12.9898, 78.233))) * 43758.5453);\n"
-    "}\n"
-
-    "void main() {\n"
-    "    // YUV to RGB conversion constants (BT.601 limited range)\n"
-    "    const vec3 offset = vec3(-0.0625, -0.5, -0.5);\n"
-    "    const vec3 Rcoeff = vec3(1.164,  0.0,     1.596);\n"
-    "    const vec3 Gcoeff = vec3(1.164, -0.391,  -0.813);\n"
-    "    const vec3 Bcoeff = vec3(1.164,  2.018,   0.0);\n"
-
-    "    // Fetch Y, U, and V components\n"
-    "    float Y = texture2D(s_texture_y, v_texCoord).r;\n"
-    "    float U = texture2D(s_texture_u, v_texCoord).r;\n"
-    "    float V = texture2D(s_texture_v, v_texCoord).r;\n"
-
-    "    // Add a small random noise for dithering\n"
-    "    float dither = random(v_texCoord) * 0.003 - 0.0015;\n"
-    "    Y += dither;\n"
-
-    "    // Perform YUV-to-RGB conversion\n"
-    "    vec3 yuv = vec3(Y, U, V) + offset;\n"
-    "    vec3 rgb;\n"
-    "    rgb.r = dot(yuv, Rcoeff);\n"
-    "    rgb.g = dot(yuv, Gcoeff);\n"
-    "    rgb.b = dot(yuv, Bcoeff);\n"
-
-    "    // Clamp to valid range\n"
-    "    gl_FragColor = vec4(clamp(rgb, 0.0, 1.0), 1.0);\n"
-    "}\n";
-
+	"precision highp float;\n"
+	"uniform sampler2D s_texture_y;\n"
+	"uniform sampler2D s_texture_u;\n"
+	"uniform sampler2D s_texture_v;\n"
+    "varying highp vec2 v_texCoord;\n"
+	"void main() {	\n"
+	"	const vec3 offset = vec3(-0.0627451017, -0.501960814, -0.501960814);\n"
+	"	const vec3 Rcoeff = vec3(1.1644,  0.000,  1.596);\n"
+	"	const vec3 Gcoeff = vec3(1.1644, -0.3918, -0.813);\n"
+	"	const vec3 Bcoeff = vec3(1.1644,  2.0172,  0.000);\n"
+	"	float Y = texture2D(s_texture_y, v_texCoord).r;\n"
+	"	float U = texture2D(s_texture_u, v_texCoord).r;\n"
+	"	float V = texture2D(s_texture_v, v_texCoord).r;\n"
+	"	vec3 yuv=vec3(Y,U,V);\n"
+	"	vec3 rgb;\n"
+	"	// Do the color transform \n"
+	"	yuv += offset;\n"
+	"	rgb.r = dot(yuv, Rcoeff);\n"
+	"	rgb.g = dot(yuv, Gcoeff);\n"
+	"	rgb.b = dot(yuv, Bcoeff);\n"
+    "	gl_FragColor = vec4(rgb, 1.0);\n"
+	"}\n";
 static const GLchar* fragment_shader_source_NV12 =
     "#version 100\n"
 	"precision mediump float;\n"

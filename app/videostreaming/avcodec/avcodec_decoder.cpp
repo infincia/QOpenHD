@@ -508,8 +508,14 @@ int AVCodecDecoder::open_and_decode_until_error(const QOpenHDVideoHelper::VideoS
       return 0;
     }
 
+    #ifdef _WIN32
+        const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_DXVA2;
+    #else
+        const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_DRM;
+    #endif
+
     //const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_D3D11VA;
-    const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_DXVA2;
+    //const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_DXVA2;
     //const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_DRM;
     //const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_D3D11VA;
     //const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_VAAPI;

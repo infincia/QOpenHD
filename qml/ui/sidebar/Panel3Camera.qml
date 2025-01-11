@@ -31,28 +31,28 @@ SideBarBasePanel{
                 sidebar.regain_control_on_sidebar_stack()
             }
             onGoto_next: {
-                exposure.takeover_control();
+                saturation.takeover_control();
             }
         }
         MavlinkChoiceElement2{
-            id: exposure
-            m_title: "Exposure"
-            m_param_id: "EXPOSURE"
+            id: saturation
+            m_title: "Saturation"
+            m_param_id: "SATURATION"
             m_settings_model: _airCameraSettingsModel
             onGoto_previous: {
                brightness.takeover_control();
             }
             onGoto_next: {
-                metering.takeover_control();
+                contrast.takeover_control();
             }
         }
         MavlinkChoiceElement2{
-            id: metering
-            m_title: "Metering"
-            m_param_id: "METERING"
+            id: contrast
+            m_title: "Contrast"
+            m_param_id: "CONTRAST"
             m_settings_model: _airCameraSettingsModel
             onGoto_previous: {
-               exposure.takeover_control();
+               saturation.takeover_control();
             }
             onGoto_next: {
                 sharpness.takeover_control();
@@ -64,7 +64,7 @@ SideBarBasePanel{
             m_param_id: "SHARPNESS"
             m_settings_model: _airCameraSettingsModel
             onGoto_previous: {
-               metering.takeover_control();
+               contrast.takeover_control();
             }
             onGoto_next: {
                 sidebar.regain_control_on_sidebar_stack()

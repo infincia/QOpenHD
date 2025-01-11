@@ -16,7 +16,6 @@ SideBarBasePanel {
 
     Rectangle {
         color: "#171d25"
-        opacity: 0.8
         anchors.top: parent.top
         anchors.topMargin: 50
         height: 340
@@ -70,24 +69,19 @@ SideBarBasePanel {
                 Layout.alignment: Qt.AlignHCenter
                 override_text_left: "Chipset GND:"
                 override_color_right: _ohdSystemGround.is_alive ? "#20b383" : "#df4c7c"
-                override_text_right: _ohdSystemGround.is_alive ? "Supported" : "Not connected"
-                // override_text_right: _ohdSystemGround.is_alive ? _ohdSystemGround.card_type_as_string : "Not connected"
-
+                override_text_right: _ohdSystemGround.is_alive ? _ohdSystemGround.card_type_as_string : "Not connected"
             }
             InfoElement2 {
                 Layout.alignment: Qt.AlignHCenter
                 override_text_left: "Chipset AIR:"
                 override_color_right: _ohdSystemAir.is_alive ? "#20b383" : "#df4c7c"
-                override_text_right: _ohdSystemAir.is_alive ? "Supported" : "Not connected"
-                // override_text_right: _ohdSystemAir.is_alive ? _ohdSystemAir.card_type_as_string : "Not connected"
-
+                override_text_right: _ohdSystemAir.is_alive ? _ohdSystemAir.card_type_as_string : "Not connected"
             }
             InfoElement2 {
                 Layout.alignment: Qt.AlignHCenter
                 override_text_left: "Camera:"
                 override_color_right: _ohdSystemAir.is_alive ? "#20b383" : "#df4c7c"
-                override_text_right: _ohdSystemAir.is_alive ? "Supported" : "Not connected"
-                // override_text_right: _ohdSystemAir.is_alive ? _ohdSystemAir.ohd_cam_type : "Not connected"
+                override_text_right: _ohdSystemAir.is_alive ? _ohdSystemAir.ohd_cam_type : "Not connected"
             }
             Button {
                 Layout.alignment: Qt.AlignHCenter

@@ -9,19 +9,19 @@
 static std::string wifi_card_type_to_string(const int card_type) {
     switch (card_type) {
     case 0:
-        return "RTL88X2AU";
+        return "88X2AU";
     case 1:
-        return "RTL88X2BU";
+        return "88X2BU";
     case 2:
-        return "RTL88X2CU";
+        return "88X2CU";
     case 3:
-        return "RTL88X2EU";
+        return "88X2EU";
     case 4:
-        return "ERR_RTL_88X2AU";
+        return "OPENHD_8852BU";
     case 5:
-        return "ERR_RTL_88X2AU";
+        return "ERR_88X2AU";
     case 6:
-        return "ERR_RTL_88X2BU";
+        return "ERR_88X2BU";
     case 7:
         return "ATHEROS";
     case 8:
@@ -33,9 +33,9 @@ static std::string wifi_card_type_to_string(const int card_type) {
     case 11:
         return "BROADCOM";
     case 12:
-        return "8852BU";
+        return "INTERNAL";
     case 13:
-        return "EMULATED";
+        return "QUALCOMM";
     default:
         return "UNKNOWN";
     }

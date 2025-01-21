@@ -153,7 +153,7 @@ public: // Stuff needs to be public for qt
     //
     L_RO_PROP(QString,mav_type_str,set_mav_type_str,"UNKNOWN");
     L_RO_PROP(QString,autopilot_type_str,set_autopilot_type_str,"UNKNOWN"); //R.n Generic (inav), ardu and pixhawk
-    L_RO_PROP(QString, last_ping_result_flight_ctrl,set_last_ping_result_flight_ctrl,"NA")
+    L_RO_PROP(QString, last_ping_result_flight_ctrl,set_last_ping_result_flight_ctrl,"N/A")
     // update rate: here we keep track of how often we get the "MAVLINK_MSG_ID_ATTITUDE" messages.
     // (since it controlls the art. horizon). This is pretty much the only thing we perhaps need to manually set the update rate on
     L_RO_PROP(float,curr_update_rate_mavlink_message_attitude,set_curr_update_rate_mavlink_message_attitude,-1)

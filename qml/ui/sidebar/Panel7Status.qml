@@ -75,7 +75,7 @@ SideBarBasePanel {
                 Layout.alignment: Qt.AlignHCenter
                 override_text_left: "Chipset AIR:"
                 override_color_right: _ohdSystemAir.is_alive ? "#20b383" : "#df4c7c"
-                override_text_right: _ohdSystemAir.is_alive ? _ohdSystemAir.card_type_as_string : "Not connected"
+                //  override_text_right: _ohdSystemAir.is_alive ? _ohdSystemAir.card_type_as_string : "Not connected"
             }
             InfoElement2 {
                 Layout.alignment: Qt.AlignHCenter

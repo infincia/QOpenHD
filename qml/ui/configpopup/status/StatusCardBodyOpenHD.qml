@@ -25,7 +25,6 @@ Column {
     property var m_model: m_is_ground ? _ohdSystemGround : _ohdSystemAir
 
     property string m_version: m_model.openhd_version
-    property string m_last_ping: m_model.last_ping_result_openhd
     property bool m_is_alive: m_model.is_alive
     property string m_qopenhd_version: _qopenhd.version_string
 
@@ -72,7 +71,7 @@ Column {
     }
 
     StatusCardRow{
-        m_left_text: qsTr("OHD Version:")
+        m_left_text: qsTr("Version:")
         m_right_text: m_version
         m_has_error: {
             if(m_is_ground){
@@ -93,69 +92,99 @@ Column {
             var text_warning= m_is_ground ? get_text_qopenhd_openhd_ground_version_mismatch() : get_text_openhd_air_ground_version_mismatch()
             return text_warning;
         }
-        m_look_shit_on_error: true
+        m_error_view: true
     }
-    StatusCardRow{
-        m_left_text: qsTr("Ping:")
-        m_right_text:  m_last_ping
-        m_right_text_color: m_last_ping === "N/A" ? "#DC143C" : "green"
-    }
-    StatusCardRow{
-        m_left_text: qsTr(m_is_ground ? "Link HW:" : "Link HW:")
+    StatusCardRow {
+        m_left_text: qsTr("Link:")
+
         m_right_text: {
-            if(m_is_ground){
-                if(!_ohdSystemGround.is_alive){
-                    return "N/A";
+            function pingToMsString(pingValue) {
+                var pingNum = parseFloat(pingValue)
+
+                // If it's not a number (NaN) or zero, return an empty string
+                if (isNaN(pingNum) || pingNum === 0) {
+                    return ""
                 }
-                var alive_count=get_gnd_active_cards();
-                if(alive_count==0) return "WAITING";
-                if(alive_count==1) return _wifi_card_gnd0.card_type_as_string;
-                return ""+alive_count+"x ARRAY";
-            }else{
-                // On air, we always have only one card
-                if(! _wifi_card_air.alive){
-                    return "N/A";
+
+                // Otherwise, convert to an integer (or leave as a string)
+                // e.g., rounding down to remove decimals
+                return Math.floor(pingNum).toString()
+            }
+
+            if (m_is_ground) {
+                if (!_ohdSystemGround.is_alive) {
+                    return "N/A"
                 }
-                return _wifi_card_air.card_type_as_string
+                var alive_count = get_gnd_active_cards()
+                if (alive_count === 0) {
+                    return "waiting"
+                }
+                if (alive_count === 1) {
+                    return _wifi_card_gnd0.card_type_as_string
+                }
+                var pingStrGnd = pingToMsString(m_model.last_ping_result_openhd)
+                if (pingStrGnd !== "") {
+                    return alive_count + "x array " + pingStrGnd + " ms"
+                } else {
+                    return alive_count + "x array"
+                }
+            } else {
+                if (!_wifi_card_air.alive) {
+                    return "n/a"
+                }
+                var pingStrAir = pingToMsString(m_model.last_ping_result_openhd)
+                var cardTypeStr = _wifi_card_air.card_type_as_string
+                if (pingStrAir !== "") {
+                    return cardTypeStr + " " + pingStrAir + " ms"
+                } else {
+                    return cardTypeStr
+                }
             }
         }
+
         m_has_error: {
-            var show_message_card_unsupported=false;
-            if(m_is_ground){
-                if(_wifi_card_gnd0.alive && !_wifi_card_gnd0.card_type_supported){
-                    show_message_card_unsupported=true;
+            var show_message_card_unsupported = false
+            if (m_is_ground) {
+                if (_wifi_card_gnd0.alive && !_wifi_card_gnd0.card_type_supported) {
+                    show_message_card_unsupported = true
                 }
-            }else{
-                if(_wifi_card_air.alive && ! _wifi_card_air.card_type_supported){
-                    show_message_card_unsupported=true;
+            } else {
+                if (_wifi_card_air.alive && !_wifi_card_air.card_type_supported) {
+                    show_message_card_unsupported = true
                 }
             }
-            return show_message_card_unsupported;
+            return show_message_card_unsupported
         }
+
         m_error_text: {
-            var message="Using unsupported card(s) has side effects like non-working frequency changes, no uplink gnd-air or bad range. Be warned !";
-            return message;
+            var message = "Using unsupported card(s) has side effects like non-working frequency changes, no uplink gnd-air or bad range. be warned !"
+            return message
         }
-        m_look_shit_on_error: true;
+
+        m_error_view: true
     }
+    // StatusCardRow{
+    //     visible: m_is_ground
+    //     m_left_text: "Uplink:"
+    //     m_right_text: {
+    //         return gnd_uplink_state_text()
+    //     }
+    //     m_has_error: {
+    //         return m_right_text=="ERROR"
+    //     }
+    //     m_error_text: {
+    //         var message="Looks like your uplink (GND to AIR) is not functional - please use a supported card on your GND station"+
+    //         " and make sure passive (listen only) mode is disabled on your ground station."
+    //         return message;
+    //     }
+    // }
     StatusCardRow{
-        visible: m_is_ground
-        m_left_text: "Uplink:"
-        m_right_text: {
-            return gnd_uplink_state_text()
-        }
-        m_has_error: {
-            return m_right_text=="ERROR"
-        }
-        m_error_text: {
-            var message="Looks like your uplink (GND to AIR) is not functional - please use a supported card on your GND station"+
-            " and make sure passive (listen only) mode is disabled on your ground station."
-            return message;
-        }
+        m_left_text: "Hidden:"
+        m_right_text: "No"
     }
     StatusCardRow{
         visible: !m_is_ground
-        m_left_text: "FC SYSID:"
+        m_left_text: "SysId:"
         m_right_text: {
             var air_fc_sys_id=_ohdSystemAir.air_reported_fc_sys_id;
             if(air_fc_sys_id==-1){
@@ -182,7 +211,7 @@ Column {
             if(air_fc_sys_id==0 || air_fc_sys_id==1)return false;
             return true;
         }
-        m_look_shit_on_error: true;
+        m_error_view: true;
     }
     StatusCardRow{
         m_left_text: "WiFi HS:"
@@ -222,16 +251,21 @@ Column {
     }
     StatusCardRow{
         visible: m_is_ground;
-        m_left_text: "EXTERNAL DEVICES:"
+        m_left_text: "Shared:"
         m_right_text: {
             if(_ohdSystemGround.external_devices_count<0){
-                return "N/A";
+                return "No";
             }
             if(_ohdSystemGround.external_devices_count==0){
-                return "NONE";
+                return "Yes";
             }
             return _ohdSystemGround.external_devices_count+"x";
         }
+    }
+    StatusCardRow{
+        visible: false;
+        m_left_text: "Licence:"
+        m_right_text: "Community"
     }
 
     // Padding

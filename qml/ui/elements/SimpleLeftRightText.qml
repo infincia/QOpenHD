@@ -22,7 +22,7 @@ Item {
     Text {
         text: m_right_text
         color: m_right_text_color;
-        font.bold: true;
+        font.bold: false;
         height: parent.height
         font.pixelSize: detailPanelFontPixels;
         anchors.right: parent.right

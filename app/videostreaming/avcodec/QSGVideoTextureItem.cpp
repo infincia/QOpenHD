@@ -28,7 +28,8 @@ void QSGVideoTextureItem::handleWindowChanged(QQuickWindow *win)
         // Ensure we start with cleared to black. The squircle's blend mode relies on this.
         // We do not need that when rendering a texture, which is what we actually want (squircle is just the example where I started with,
         // since I had to start somehow ;)
-        win->setColor(Qt::black);
+        // if you put this to any color it will mess up the videorenderer
+        //win->setColor(Qt::black);
     }
 }
 

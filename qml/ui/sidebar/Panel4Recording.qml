@@ -44,16 +44,15 @@ SideBarBasePanel {
         }
         Rectangle {
             color: "#171d25"
-            opacity: 0.85
             height: recording_mode.height
             width: recording_mode.width
             Text {
                 anchors.centerIn: parent
                 anchors.leftMargin: 40
                 text: {
-                    var tmp = "      Status";
+                    var tmp = "  Status";
                     if (!_ohdSystemAir.is_alive) {
-                        return tmp + "                 disabled ";
+                        return tmp + "                   disabled ";
                     }
                     return tmp + _cameraStreamModelPrimary.camera_recording_mode_to_string(_cameraStreamModelPrimary.air_recording_active)
                 }
@@ -64,7 +63,6 @@ SideBarBasePanel {
         }
         Rectangle {
             color: secondaryUiColor
-            opacity: 0.20
             height: recording_mode.height+120
             width: recording_mode.width
         }

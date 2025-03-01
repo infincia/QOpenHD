@@ -140,10 +140,6 @@ BaseJoyEditElement2{
         }else{
             m_param_exists=m_settings_model.param_int_exists(m_param_id)
         }
-        if(m_param_id==mPARAM_ID_FREQUENCY_SCAN){
-                m_param_exists=true;
-                _wbLinkSettingsHelper.change_param_air_and_ground_frequency(value_new)
-            }
         if(!m_param_exists){
             console.log("Param "+m_param_id+" does not exist");
             populate_display_text="NOT\nAVAILABLE";

@@ -8,7 +8,6 @@ import OpenHD 1.0
 
 
 // Element for showing the user a (big) settings text that should be clicked to be edited
-// Big buttons look shit, so we have this alternative
 Button{
     id: button
     width:180
@@ -22,7 +21,7 @@ Button{
         anchors.left: parent.left
         anchors.leftMargin: 1
         opacity: 1.0
-        color: button.hovered ? "lightgrey" : "transparent" // Only look shit when hovered
+        color: button.hovered ? "lightgrey" : "transparent"
     }
 
 }

@@ -41,10 +41,7 @@ Item {
 
     property string m_error_text: "NONE"
 
-    // If this is set to true, the UI looks intentionally shit
-    // because it is an error that should be resolved by the user
-    // as quick as possible
-    property bool m_look_shit_on_error: false
+    property bool m_error_view: false
 
     // For debugging
     /*Rectangle{
@@ -100,7 +97,7 @@ Item {
             padding: 4
         }
         MouseArea {
-            enabled: m_has_error && !m_look_shit_on_error
+            enabled: m_has_error && !m_error_view
             anchors.fill: parent
             onClicked: {
                 _messageBoxInstance.set_text_and_show(m_error_text)
@@ -111,6 +108,7 @@ Item {
             width: parent.width-left_part.width
             height: parent.height
             anchors.left: left_part.right
+            anchors.leftMargin: -10
             anchors.top: left_part.top
             text: m_right_text
             background: Rectangle {
@@ -119,11 +117,11 @@ Item {
                         anchors.left: parent.left
                         anchors.leftMargin: 5
                         opacity: .3
-                        color: right_part_button.hovered ? "lightgrey" : "transparent" // Only look shit when hovered
+                        color: right_part_button.hovered ? "lightgrey" : "transparent"
                     }
             //Material.accent: Material.Red
             //highlighted: true
-            visible: m_has_error && m_look_shit_on_error
+            visible: m_has_error && m_error_view
             onClicked: {
                 _messageBoxInstance.set_text_and_show(m_error_text)
             }

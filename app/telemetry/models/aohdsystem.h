@@ -89,7 +89,7 @@ public: // public for QT
     L_RO_PROP(QString,battery_gauge,set_battery_gauge,"\uf091")
     // needs to be queried explicitly (not continous fire and forget)
     L_RO_PROP(QString,openhd_version,set_openhd_version,"N/A")
-    L_RO_PROP(QString,last_ping_result_openhd,set_last_ping_result_openhd,"N/A")
+    L_RO_PROP(QString,last_ping_result_openhd,set_last_ping_result_openhd," ")
     L_RO_PROP(bool,is_alive,set_is_alive,false)
     //
     L_RO_PROP(int,current_rx_rssi,set_current_rx_rssi,-128)

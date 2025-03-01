@@ -16,16 +16,15 @@
 
 #include "ExternalDecodeService.hpp"
 
-static int hw_decoder_init(AVCodecContext *ctx, const enum AVHWDeviceType type) {
+static int hw_decoder_init(AVCodecContext *ctx, const enum AVHWDeviceType type){
     int err = 0;
     ctx->hw_frames_ctx = NULL;
-    if ((err = av_hwdevice_ctx_create(&ctx->hw_device_ctx, type, NULL, NULL, 0)) < 0) {
-        char errbuf[128];
-        av_strerror(err, errbuf, sizeof(errbuf));
-        fprintf(stderr, "Failed to create HW device (%s): %s\n", av_hwdevice_get_type_name(type), errbuf);
+    // ctx->hw_device_ctx gets freed when we call avcodec_free_context
+    if ((err = av_hwdevice_ctx_create(&ctx->hw_device_ctx, type,
+                                      NULL, NULL, 0)) < 0) {
+        fprintf(stderr, "Failed to create specified HW device.\n");
         return err;
     }
-    qDebug() << "HW device created: " << av_hwdevice_get_type_name(type);
     return err;
 }
 
@@ -354,11 +353,11 @@ void AVCodecDecoder::on_new_frame(AVFrame *frame)
         std::stringstream ss;
         ss<<safe_av_get_pix_fmt_name((AVPixelFormat)frame->format)<<" "<<frame->width<<"x"<<frame->height;
         DecodingStatistcs::instance().set_primary_stream_frame_format(QString(ss.str().c_str()));
-        // qDebug()<<"Got frame:"<<ss.str().c_str();
+        //qDebug()<<"Got frame:"<<ss.str().c_str();
     }
     // Once we got the first frame, reduce the log level
     av_log_set_level(AV_LOG_WARNING);
-    // qDebug()<<debug_frame(frame).c_str();
+    //qDebug()<<debug_frame(frame).c_str();
     TextureRenderer::instance().queue_new_frame_for_display(frame);
     if(last_frame_width==-1 || last_frame_height==-1){
         last_frame_width=frame->width;
@@ -509,21 +508,14 @@ int AVCodecDecoder::open_and_decode_until_error(const QOpenHDVideoHelper::VideoS
       return 0;
     }
 
-    #ifdef _WIN32
-        const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_D3D11VA;
-    #else
-        const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_DRM;
-    #endif
-
-    //const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_D3D11VA;
-    //const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_DXVA2;
-    //const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_DRM;
+    const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_DRM;
     //const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_VAAPI;
     //const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_CUDA;
     //const AVHWDeviceType kAvhwDeviceType = AV_HWDEVICE_TYPE_VDPAU;
 
     bool is_mjpeg=false;
     if (decoder->id == AV_CODEC_ID_H264) {
+        qDebug()<<"H264 decode";
         qDebug()<<all_hw_configs_for_this_codec(decoder).c_str();
         if(!stream_config.enable_software_video_decoder){
             // weird workaround needed for pi + DRM_PRIME
@@ -727,8 +719,7 @@ void AVCodecDecoder::open_and_decode_until_error_custom_rtp(const QOpenHDVideoHe
                  wanted_hw_pix_fmt = AV_PIX_FMT_MMAL;
                  use_pi_hw_decode=true;
              }else{
-                 qDebug()<<"Starting HW decode";
-                 wanted_hw_pix_fmt = AV_PIX_FMT_DXVA2_VLD;
+                 wanted_hw_pix_fmt = AV_PIX_FMT_YUV420P;
              }
          }else{
              wanted_hw_pix_fmt = AV_PIX_FMT_YUV420P;

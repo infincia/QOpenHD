@@ -34,7 +34,10 @@ jobs:
 
       - name: fix ci
         run: sudo apt-mark hold grub-efi-amd64-signed
-
+  
+      - name: Install ccache
+        run:  sudo apt-get install -y ccache
+  
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
@@ -51,9 +54,6 @@ jobs:
         with:
           ndk-version: r21e
           add-to-path: false
-
-      - name: Install ccache
-        run:  sudo apt-get install ccache
 
       - name: Prepare ccache timestamp
         id: ccache_cache_timestamp
@@ -81,7 +81,7 @@ jobs:
       - name: Create build directory
         run:  mkdir ${{ runner.temp }}/shadow_build_dir
 
-      - name:               Install gstreamer
+      - name: Install gstreamer
         working-directory:  ${{ github.workspace }}
         run: |
           cd lib/gstreamer_prebuilts/
@@ -100,7 +100,7 @@ jobs:
           make -j$(($(nproc)/2)) qmake_all
           make -j12
           make install INSTALL_ROOT=android
-          androiddeployqt --output android --verbose --input android-QOpenHD-deployment-settings.json  --android-platform android-33 --gradle
+          androiddeployqt --output android --verbose --input android-QOpenHD-deployment-settings.json  --android-platform android-34 --gradle
 
       - name: ccache post-run
         run:  ccache -s

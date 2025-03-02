@@ -1,1 +1,1 @@
-curl https://gstreamer.freedesktop.org/data/pkg/android/1.20.5/gstreamer-1.0-android-universal-1.20.5.tar.xz --output  gstreamer-1.0-android-universal-1.20.5.tar.xz
+curl https://gstreamer.freedesktop.org/data/pkg/android/1.22.12/gstreamer-1.0-android-universal-1.22.12.tar.xz --output  gstreamer-1.0-android-universal-1.20.5.tar.xz

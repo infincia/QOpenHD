@@ -58,6 +58,24 @@
 #include "platform/appleplatform.h"
 #endif
 
+#if defined(__windows__)
+#include <windows.h>
+#include <stdio.h>
+#include <fcntl.h>
+
+void attachConsole() {
+    if (AttachConsole(ATTACH_PARENT_PROCESS) || AllocConsole()) {
+        freopen("CONOUT$", "w", stdout);
+        freopen("CONOUT$", "w", stderr);
+        setvbuf(stdout, nullptr, _IONBF, 0);
+        setvbuf(stderr, nullptr, _IONBF, 0);
+        printf("Console attached!\n");
+    } else {
+        MessageBoxA(NULL, "Failed to attach console!", "Error", MB_OK | MB_ICONERROR);
+    }
+}
+#endif
+
 #include "logging/logmessagesmodel.h"
 #include "logging/hudlogmessagesmodel.h"
 #include "util/qopenhd.h"
@@ -237,6 +255,7 @@ int main(int argc, char *argv[]) {
 
 #if defined(__windows__)
     QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
+    attachConsole();
 #endif
 
     QCoreApplication::setOrganizationName("OpenHD");

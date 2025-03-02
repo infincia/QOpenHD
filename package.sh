@@ -82,7 +82,7 @@ elif [[ "${PACKAGE_ARCH}" = "arm64" ]]; then
 cp rock_qt_eglfs_kms_config.json /tmp/qopenhd/usr/local/share/qopenhd/ || exit 1
 fi
 
-VERSION="2.6.2-$(date -d '+1 hour' +'%m-%d-%Y--%H-%M-%S')-${VER2}"
+VERSION="2.6.3-$(date -d '+1 hour' +'%m-%d-%Y--%H-%M-%S')-${VER2}"
 
 ls -a ${TMPDIR}/usr/local/bin
 echo "going into packaging stage"
